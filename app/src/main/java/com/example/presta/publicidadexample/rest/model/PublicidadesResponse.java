@@ -8,6 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by Presta on 10/03/2016.
  */
+// Objeto que contiene la respuesta de la API
 public class PublicidadesResponse {
 
     @SerializedName("publicidades")
