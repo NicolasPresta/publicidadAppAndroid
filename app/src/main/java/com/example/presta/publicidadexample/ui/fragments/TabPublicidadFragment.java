@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import com.example.presta.publicidadexample.R;
 import com.example.presta.publicidadexample.rest.PublicidadesAdapter;
 import com.example.presta.publicidadexample.rest.model.PublicidadesResponse;
 import com.example.presta.publicidadexample.ui.adapter.PublicidadAdapter;
-import com.example.presta.publicidadexample.ui.decorator.ItemDividerDecoration;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -70,16 +68,16 @@ public class TabPublicidadFragment extends Fragment {
 
     //region "-- PRIVATE METHODS --"
 
-    private void setupList(){
+    private void setupList() {
         mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecycler.setAdapter(adapter);
-        mRecycler.addItemDecoration(new ItemDividerDecoration(getActivity()));
+        // mRecycler.addItemDecoration(new ItemDividerDecoration(getActivity()));
     }
 
     private void requestPublicidades() {
         PublicidadesAdapter.getAll()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( new Subscriber<PublicidadesResponse>(){
+                .subscribe(new Subscriber<PublicidadesResponse>() {
                     @Override
                     public void onNext(PublicidadesResponse publicidadesResponse) {
                         adapter.addAll(publicidadesResponse.getPublicidades());

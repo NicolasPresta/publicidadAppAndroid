@@ -43,8 +43,10 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(new PageAdapter(getSupportFragmentManager(), buildFragments()));
         tabLayout.setupWithViewPager(viewPager);
 
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_corazon);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_corazon);
+        tabLayout.getTabAt(0).setText("Promos");
+        //tabLayout.getTabAt(0).setIcon(R.drawable.ic_corazon);
+        tabLayout.getTabAt(1).setText("Catalogo");
+        //tabLayout.getTabAt(1).setIcon(R.drawable.ic_corazon);
 
     }
 
