@@ -2,9 +2,11 @@
 <resources>
     <dimen name="item_publicidad_height">220dp</dimen>
     <dimen name="item_publicidad_img_height">190dp</dimen>
-    <dimen name="publicidad_detalle_img_height">300dp</dimen>
+    <dimen name="publicidad_detalle_img_height">350dp</dimen>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="margen_entre_publicidades">10dp</dimen>
+
 </resources>

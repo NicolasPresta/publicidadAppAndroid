@@ -9,7 +9,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
     defaultConfig {
-        applicationId "com.example.presta.publicidadexample"
+        applicationId "com.alpha.presta.publicidadexample"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1

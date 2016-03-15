@@ -5,7 +5,7 @@
     android:foreground="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:elevation="5dp"
-    android:layout_marginBottom="5dp">
+    android:layout_marginBottom="@dimen/margen_entre_publicidades">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
@@ -18,7 +18,8 @@
             android:id="@+id/img_publicidad"
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_publicidad_img_height"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:transitionName="shareImg"/>
 
         <LinearLayout
             android:id="@+id/linear_1"

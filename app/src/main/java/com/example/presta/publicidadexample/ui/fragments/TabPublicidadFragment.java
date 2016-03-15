@@ -55,13 +55,16 @@ public class TabPublicidadFragment extends Fragment {
         // Hace el setup del RecyclerView
         setupList();
 
+        // Consulta las publicidades a la API
+        requestPublicidades();
+
         return root;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        requestPublicidades();
+
     }
 
     //endregion

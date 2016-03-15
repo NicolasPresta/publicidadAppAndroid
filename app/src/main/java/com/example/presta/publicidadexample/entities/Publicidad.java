@@ -31,6 +31,9 @@ public class Publicidad {
 
     //region "-- ATRIBUTES --"
 
+    @SerializedName("id")
+    private Integer id;
+
     @SerializedName("titulo")
     private String titulo;
 
@@ -52,6 +55,10 @@ public class Publicidad {
     //endregion
 
     //region "-- SETTERS --"
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
@@ -77,9 +84,14 @@ public class Publicidad {
         this.img = img;
     }
 
+
     //endregion
 
     //region "-- GETTERS --"
+
+    public Integer getId() {
+        return id;
+    }
 
     public String getTitulo() {
         return titulo;

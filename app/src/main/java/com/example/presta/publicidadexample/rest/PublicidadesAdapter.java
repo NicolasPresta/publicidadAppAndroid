@@ -1,5 +1,6 @@
 package com.example.presta.publicidadexample.rest;
 
+import com.example.presta.publicidadexample.rest.model.PublicidadResponse;
 import com.example.presta.publicidadexample.rest.model.PublicidadesResponse;
 
 import java.lang.reflect.Type;
@@ -34,5 +35,9 @@ public class PublicidadesAdapter {
 
     public static Observable<PublicidadesResponse> getAll() {
         return getApiService().getAll();
+    }
+
+    public static Observable<PublicidadResponse> getById(Integer id) {
+        return getApiService().getById(id);
     }
 }
