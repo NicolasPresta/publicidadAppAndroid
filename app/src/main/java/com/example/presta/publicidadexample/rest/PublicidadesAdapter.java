@@ -1,5 +1,10 @@
 package com.example.presta.publicidadexample.rest;
 
+import android.app.Application;
+import android.content.Context;
+import android.telephony.TelephonyManager;
+
+import com.example.presta.publicidadexample.common.CommonVariables;
 import com.example.presta.publicidadexample.rest.model.PublicidadResponse;
 import com.example.presta.publicidadexample.rest.model.PublicidadesResponse;
 
@@ -19,8 +24,9 @@ public class PublicidadesAdapter {
 
     private static IPublicidadesService API_SERVICE;
 
-    public static IPublicidadesService getApiService(){
-        if(API_SERVICE == null) {
+
+    public static IPublicidadesService getApiService() {
+        if (API_SERVICE == null) {
 
             RestAdapter adapter = new RestAdapter.Builder()
                     .setEndpoint(ApiConstants.URL_BASE)
@@ -34,10 +40,10 @@ public class PublicidadesAdapter {
     }
 
     public static Observable<PublicidadesResponse> getAll() {
-        return getApiService().getAll();
+        return getApiService().getAll(CommonVariables.GetUuid());
     }
 
     public static Observable<PublicidadResponse> getById(Integer id) {
-        return getApiService().getById(id);
+        return getApiService().getById(CommonVariables.GetUuid(), id);
     }
 }

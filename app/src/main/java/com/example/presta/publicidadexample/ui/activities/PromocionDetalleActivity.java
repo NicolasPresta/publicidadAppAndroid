@@ -1,8 +1,10 @@
 package com.example.presta.publicidadexample.ui.activities;
 
+import android.content.Context;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -113,6 +115,10 @@ public class PromocionDetalleActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    private String getUuid(){
+        return ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getSubscriberId();
     }
 
     private void cargarPublicidad(Publicidad publicidad) {

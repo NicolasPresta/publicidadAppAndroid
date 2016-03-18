@@ -1,76 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-
-    android:orientation="vertical">
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/primary"
-        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <ImageView
-        android:id="@+id/img_publicidad"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/publicidad_detalle_img_height"
-        android:scaleType="centerCrop"
-        android:transitionName="shareImg" />
+    android:layout_width="fill_parent">
 
     <LinearLayout
-        android:id="@+id/linear_1"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="3dp"
-        android:gravity="left"
-        android:orientation="vertical"
-        android:paddingLeft="10dp">
+        android:layout_height="wrap_content"
 
-        <TextView
-            android:id="@+id/txt_titulo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Una super oferta"
-            android:textColor="@color/primary_text"
-            android:textSize="25sp" />
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txt_descripcion"
-            android:layout_width="wrap_content"
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="TV 42 pulgadas a solo $10000"
-            android:textColor="@color/secondary_text"
-            android:textSize="20sp" />
+            android:background="@color/primary"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
 
-        <TextView
-            android:id="@+id/txt_valides"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/secondary_text"
-            android:textSize="20sp" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|enterAlways" />
 
-        <TextView
-            android:id="@+id/txt_condiciones"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/secondary_text"
-            android:textSize="15sp" />
+        </android.support.design.widget.AppBarLayout>
+
+        <ImageView
+            android:id="@+id/img_publicidad"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/publicidad_detalle_img_height"
+            android:scaleType="centerCrop"
+            android:transitionName="shareImg" />
+
+        <LinearLayout
+            android:id="@+id/linear_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="3dp"
+            android:gravity="left"
+            android:orientation="vertical"
+            android:paddingLeft="10dp">
+
+            <TextView
+                android:id="@+id/txt_titulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Una super oferta"
+                android:textColor="@color/primary_text"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/txt_descripcion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="TV 42 pulgadas a solo $10000"
+                android:textColor="@color/secondary_text"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/txt_valides"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/secondary_text"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/txt_condiciones"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/secondary_text"
+                android:textSize="15sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

@@ -15,10 +15,10 @@ public interface IPublicidadesService {
 
     // GetAll publicidades
     @GET(ApiConstants.URL_PUBLICIDADES)
-    Observable<PublicidadesResponse> getAll();
+    Observable<PublicidadesResponse> getAll(@Path("uuid") String uuid);
 
     // GetById publicidad
     @GET(ApiConstants.URL_PUBLICIDAD)
-    Observable<PublicidadResponse> getById(@Path("id") Integer id);
+    Observable<PublicidadResponse> getById(@Path("uuid") String uuid, @Path("id") Integer id);
 
 }
