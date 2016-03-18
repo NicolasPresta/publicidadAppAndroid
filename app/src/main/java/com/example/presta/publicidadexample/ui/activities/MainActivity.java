@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,16 +24,27 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.presta.publicidadexample.R;
 import com.example.presta.publicidadexample.common.CommonVariables;
+import com.example.presta.publicidadexample.model.AppConfig;
+import com.example.presta.publicidadexample.model.AppConfigDao;
+import com.example.presta.publicidadexample.model.DaoMaster;
+import com.example.presta.publicidadexample.model.DaoSession;
+import com.example.presta.publicidadexample.model.PhoneData;
+import com.example.presta.publicidadexample.model.PhoneDataDao;
+import com.example.presta.publicidadexample.model.UserData;
+import com.example.presta.publicidadexample.model.UserDataDao;
 import com.example.presta.publicidadexample.ui.adapter.PageAdapter;
 import com.example.presta.publicidadexample.ui.fragments.TabPublicidadFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -45,26 +57,126 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
 
     DatePicker dateCumple;
+    RadioButton rbHombre;
+    RadioButton rbMujer;
     Button btContinuar;
 
     ArrayList<String> contactList;
     Cursor cursor;
     int counter;
-    Boolean primeraVezAbiertaApp = true;
+
+    AppConfigDao appConfigDao;
+    AppConfig appConfig;
+
+    PhoneDataDao phoneDataDao;
+    PhoneData phoneData;
+
+    UserDataDao userDataDao;
+    UserData userData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (primeraVezAbiertaApp) {
+        // Cargar configuración inicial.
+        cargarUuid();
+
+        cargarDao();
+        cargarConfigApp();
+
+
+        if (appConfig.getEsPrimerUso()) {
             cargarPrimerUsoLayout();
         } else {
             cargarMainLayout();
         }
 
-        ObtenerInfoDispositivo(); // READ_PHONE_STATE
+        cargarPhoneData();
+        sincronizarPhoneData();
+
+
+        // READ_PHONE_STATE
         //ObtenerInfoCuentas(); // GET_ACCOUNTS
         //ObtenerInfoContactos(); // READ_CONTACTS
+
+    }
+
+    private void sincronizarPhoneData() {
+        // TODO: Si no está sincronizado el phoneData, sincronizarlo con el servidor.
+    }
+
+    private void cargarUuid() {
+        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        CommonVariables.SetUuid(tm.getSubscriberId());
+    }
+
+    private void cargarDao() {
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "app-db", null);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(db);
+        DaoSession daoSession = daoMaster.newSession();
+
+        phoneDataDao = daoSession.getPhoneDataDao();
+        appConfigDao = daoSession.getAppConfigDao();
+        userDataDao = daoSession.getUserDataDao();
+    }
+
+    // Carga el objeto PhoneData en la base de datos en caso de que el mismo no exista.
+    private void cargarPhoneData() {
+
+
+        List phoneDatalist = phoneDataDao.loadAll();
+        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        CommonVariables.SetUuid(tm.getSubscriberId());
+
+        if (phoneDatalist.size() == 0) {
+            phoneData = new PhoneData();
+            phoneData.setDeviceId(tm.getDeviceId());
+            phoneData.setSubscriberId(tm.getSubscriberId());
+            phoneData.setSimSerialNumber(tm.getSimSerialNumber());
+            phoneData.setLine1Number(tm.getLine1Number());
+            phoneData.setNetworkOperatorName(tm.getNetworkOperatorName());
+            phoneData.setNetworkCountryIso(tm.getNetworkCountryIso());
+
+            phoneData.setSDK_INT(Build.VERSION.SDK_INT);
+            phoneData.setMANUFACTURER(Build.MANUFACTURER);
+            phoneData.setMODEL(Build.MODEL);
+
+            phoneData.setDatosSincronizados(false);
+
+            phoneDataDao.insert(phoneData);
+        } else {
+            phoneData = (PhoneData) phoneDatalist.get(0);
+        }
+
+
+        // LOGS:
+        Log.i("READ_getDeviceId", tm.getDeviceId()); // Numero unico del celular
+        Log.i("READ_getSubscriberId", tm.getSubscriberId()); // Numero unico de instalación de Android
+
+        Log.i("READ_getSimSerialNumber", tm.getSimSerialNumber()); // Numero unico de la SIM
+        Log.i("READ_getLine1Number", tm.getLine1Number()); // Numero de telefono (Si lo tiene cargado, generalmente no y esto es nulo)
+        Log.i("READ_getNetworkOperator", tm.getNetworkOperatorName()); // Nombre de la operadora de telefonia
+        Log.i("READ_getNetworkCountryI", tm.getNetworkCountryIso()); // Codigo del pais
+
+        Log.i("READ.VERSION.SDK_INT", Integer.toString(Build.VERSION.SDK_INT)); // Version de Android
+        Log.i("READ.MANUFACTURER", Build.MANUFACTURER); // Fabricante del celular
+        Log.i("READ.MODEL", Build.MODEL); // Modelo del celular
+
+    }
+
+    private void cargarConfigApp() {
+
+        List appConfigs = appConfigDao.loadAll();
+        if (appConfigs.size() == 0) {
+
+            appConfig = new AppConfig();
+            appConfig.setEsPrimerUso(true);
+            appConfigDao.insert(appConfig);
+        } else {
+            appConfig = (AppConfig) appConfigs.get(0);
+        }
 
     }
 
@@ -72,15 +184,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_primer_uso);
 
         dateCumple = (DatePicker) findViewById(R.id.date_cumple);
-       /* Calendar c = Calendar.getInstance();
+        btContinuar = (Button) findViewById(R.id.btn_Continuar);
+        rbHombre = (RadioButton) findViewById(R.id.rbHombre);
+        rbMujer = (RadioButton) findViewById(R.id.rbMujer);
+
+        Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
 
-        c.set(year - 80, 1, 1);
-        dateCumple.setMinDate(c.getTimeInMillis());
-        c.set(year - 8, 1, 1);
-        dateCumple.setMaxDate(c.getTimeInMillis());*/
 
-        btContinuar = (Button) findViewById(R.id.btn_Continuar);
+        c.set(year - 80, 0, 1);
+        dateCumple.setMinDate(c.getTimeInMillis());
+        c.set(year - 8, 11, 30);
+        dateCumple.setMaxDate(c.getTimeInMillis());
+
+        dateCumple.refreshDrawableState();
+
 
     }
 
@@ -89,6 +207,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void continuarOnClick(View v) {
+        appConfig.setEsPrimerUso(false);
+        appConfigDao.update(appConfig);
+
+        userData = new UserData();
+
+        if (rbHombre.isChecked())
+            userData.setSexo("H");
+        else
+            userData.setSexo("M");
+
+        int day = dateCumple.getDayOfMonth();
+        int month = dateCumple.getMonth() + 1;
+        int year = dateCumple.getYear();
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(year, month, day, 0, 0, 0);
+
+        userData.setFechaNacimiento(cal.getTime());
+
         cargarMainLayout();
     }
 
@@ -228,22 +366,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void ObtenerInfoDispositivo() {
-        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 
-        Log.i("READ_getDeviceId", tm.getDeviceId()); // Numero unico del celular
-        Log.i("READ_getSubscriberId", tm.getSubscriberId()); // Numero unico de instalación de Android
-
-        CommonVariables.SetUuid(tm.getSubscriberId());
-
-        Log.i("READ_getSimSerialNumber", tm.getSimSerialNumber()); // Numero unico de la SIM
-        Log.i("READ_getLine1Number", tm.getLine1Number()); // Numero de telefono (Si lo tiene cargado, generalmente no y esto es nulo)
-        Log.i("READ_getNetworkOperator", tm.getNetworkOperatorName()); // Nombre de la operadora de telefonia
-        Log.i("READ_getNetworkCountryI", tm.getNetworkCountryIso()); // Codigo del pais
-        Log.i("READ_getDeviceSoftwareV", tm.getDeviceSoftwareVersion()); // Version de Software
-
-        Log.i("READ.VERSION.SDK_INT", Integer.toString(Build.VERSION.SDK_INT)); // Version de Android
-        Log.i("READ.MANUFACTURER", Build.MANUFACTURER); // Fabricante del celular
-        Log.i("READ.MODEL", Build.MODEL); // Modelo del celular
     }
 
     private void setupViewPager() {
