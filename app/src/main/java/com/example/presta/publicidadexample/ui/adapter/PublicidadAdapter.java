@@ -1,6 +1,5 @@
 package com.example.presta.publicidadexample.ui.adapter;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
@@ -8,8 +7,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +17,7 @@ import android.widget.TextView;
 
 import com.example.presta.publicidadexample.ui.activities.PromocionDetalleActivity;
 import com.example.presta.publicidadexample.R;
-import com.example.presta.publicidadexample.entities.Publicidad;
+import com.example.presta.publicidadexample.rest.model.Publicidad;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

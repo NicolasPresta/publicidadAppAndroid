@@ -1,4 +1,4 @@
-package com.example.presta.publicidadexample.entities;
+package com.example.presta.publicidadexample.rest.model;
 
 import com.google.gson.annotations.SerializedName;
 

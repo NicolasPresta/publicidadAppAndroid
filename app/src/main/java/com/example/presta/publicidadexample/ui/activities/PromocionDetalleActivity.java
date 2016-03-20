@@ -10,10 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.presta.publicidadexample.R;
-import com.example.presta.publicidadexample.entities.Publicidad;
+import com.example.presta.publicidadexample.rest.model.Publicidad;
 import com.example.presta.publicidadexample.rest.PublicidadesAdapter;
 import com.example.presta.publicidadexample.rest.model.PublicidadResponse;
-import com.example.presta.publicidadexample.rest.model.PublicidadesResponse;
 import com.example.presta.publicidadexample.ui.adapter.PublicidadAdapter;
 import com.squareup.picasso.Picasso;
 

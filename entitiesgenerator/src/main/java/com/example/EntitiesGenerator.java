@@ -14,7 +14,7 @@ public class EntitiesGenerator {
     private static final String PROJECT_DIR = System.getProperty("user.dir").replace("\\", "/");
 
     public static void main(String args[]) throws Exception {
-        Schema schema = new Schema(1, "com.example.presta.publicidadexample.model");
+        Schema schema = new Schema(1, "com.example.presta.publicidadexample.dataAccess.model");
 
         Entity appConfig = schema.addEntity("AppConfig");
         appConfig.addIdProperty();
@@ -24,6 +24,7 @@ public class EntitiesGenerator {
         userData.addIdProperty();
         userData.addDateProperty("fechaNacimiento");
         userData.addStringProperty("sexo");
+        userData.addStringProperty("cuentas");
         userData.addBooleanProperty("datosSincronizados");
 
         Entity phoneData = schema.addEntity("PhoneData");

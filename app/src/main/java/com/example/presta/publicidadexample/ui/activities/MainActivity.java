@@ -2,13 +2,11 @@ package com.example.presta.publicidadexample.ui.activities;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -18,53 +16,54 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
-import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
 import com.example.presta.publicidadexample.R;
 import com.example.presta.publicidadexample.common.CommonVariables;
-import com.example.presta.publicidadexample.model.AppConfig;
-import com.example.presta.publicidadexample.model.AppConfigDao;
-import com.example.presta.publicidadexample.model.DaoMaster;
-import com.example.presta.publicidadexample.model.DaoSession;
-import com.example.presta.publicidadexample.model.PhoneData;
-import com.example.presta.publicidadexample.model.PhoneDataDao;
-import com.example.presta.publicidadexample.model.UserData;
-import com.example.presta.publicidadexample.model.UserDataDao;
+import com.example.presta.publicidadexample.rest.post.OnPostCompleted;
+import com.example.presta.publicidadexample.dataAccess.dao.DaoSessionAccesor;
+import com.example.presta.publicidadexample.dataAccess.model.AppConfig;
+import com.example.presta.publicidadexample.dataAccess.model.AppConfigDao;
+import com.example.presta.publicidadexample.dataAccess.model.PhoneData;
+import com.example.presta.publicidadexample.dataAccess.model.PhoneDataDao;
+import com.example.presta.publicidadexample.dataAccess.model.UserData;
+import com.example.presta.publicidadexample.dataAccess.model.UserDataDao;
+import com.example.presta.publicidadexample.rest.ApiConstants;
+import com.example.presta.publicidadexample.rest.post.PostRequestTask;
 import com.example.presta.publicidadexample.ui.adapter.PageAdapter;
 import com.example.presta.publicidadexample.ui.fragments.TabPublicidadFragment;
 
-import java.text.SimpleDateFormat;
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by Presta on 10/03/2016.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnPostCompleted {
 
+    //region "-- ATRIBUTOS PRIVADOS --"
+
+    // componentes de mainLayout
     Toolbar toolbar;
     ViewPager viewPager;
     TabLayout tabLayout;
 
+    // componentes de primerUsoLayout
     DatePicker dateCumple;
     RadioButton rbHombre;
     RadioButton rbMujer;
     Button btContinuar;
 
-    ArrayList<String> contactList;
-    Cursor cursor;
-    int counter;
-
+    // acceso a datos
     AppConfigDao appConfigDao;
     AppConfig appConfig;
 
@@ -74,57 +73,69 @@ public class MainActivity extends AppCompatActivity {
     UserDataDao userDataDao;
     UserData userData;
 
+    //endregion
+
+    //region "-- OVERRIDES --"
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Cargar configuración inicial.
+        // Cargar uuid en una variable compartida por toda la app.
         cargarUuid();
 
-        cargarDao();
+        // Inizializa el acceso a la base de datos SQLLitle
+        appConfigDao = DaoSessionAccesor.GetDaoSession(this).getAppConfigDao();
+        phoneDataDao = DaoSessionAccesor.GetDaoSession(this).getPhoneDataDao();
+        userDataDao = DaoSessionAccesor.GetDaoSession(this).getUserDataDao();
+
+        // Carga la configuración base de la app
         cargarConfigApp();
 
-
+        // Si es el primer uso entonces cargamos el form para ingresar edad y sexo
         if (appConfig.getEsPrimerUso()) {
             cargarPrimerUsoLayout();
+
         } else {
+            // si no cargamos el layout principal
             cargarMainLayout();
         }
 
-        cargarPhoneData();
+        // Carga los datos del celular, y verifica si no se envió al servidor intenta enviarlo.
         sincronizarPhoneData();
 
-
-        // READ_PHONE_STATE
+        sincronizarUserData();
         //ObtenerInfoCuentas(); // GET_ACCOUNTS
         //ObtenerInfoContactos(); // READ_CONTACTS
 
     }
 
-    private void sincronizarPhoneData() {
-        // TODO: Si no está sincronizado el phoneData, sincronizarlo con el servidor.
+    @Override
+    public void onPostCompleted(String metodo, Integer result) {
+
+        // Si la ejecución del post del phoneData fue exitosa, marcamos el registro como ya actualizado y nunca mas nos preocuparemos por él :)
+        if (metodo == ApiConstants.METHOD_PHONEDATA)
+            if (result == HttpURLConnection.HTTP_OK) {
+                Log.i("POST", "los phoneData se sincronizaron ok");
+                phoneData.setDatosSincronizados(true);
+                phoneDataDao.update(phoneData);
+            }
+
+        // Idem para userData
+        if (metodo == ApiConstants.METHOD_USERDATA)
+            if (result == HttpURLConnection.HTTP_OK) {
+                Log.i("POST", "los userData se sincronizaron ok");
+                userData.setDatosSincronizados(true);
+                userDataDao.update(userData);
+            }
     }
 
-    private void cargarUuid() {
-        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        CommonVariables.SetUuid(tm.getSubscriberId());
-    }
+    //endregion
 
-    private void cargarDao() {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "app-db", null);
-        SQLiteDatabase db = helper.getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(db);
-        DaoSession daoSession = daoMaster.newSession();
+    //region "-- CARGA DESDE SQL --"
 
-        phoneDataDao = daoSession.getPhoneDataDao();
-        appConfigDao = daoSession.getAppConfigDao();
-        userDataDao = daoSession.getUserDataDao();
-    }
-
-    // Carga el objeto PhoneData en la base de datos en caso de que el mismo no exista.
     private void cargarPhoneData() {
-
+        // Carga el objeto PhoneData en la base de datos en caso de que el mismo no exista.
 
         List phoneDatalist = phoneDataDao.loadAll();
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
@@ -152,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // LOGS:
+        /*
         Log.i("READ_getDeviceId", tm.getDeviceId()); // Numero unico del celular
         Log.i("READ_getSubscriberId", tm.getSubscriberId()); // Numero unico de instalación de Android
 
@@ -163,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("READ.VERSION.SDK_INT", Integer.toString(Build.VERSION.SDK_INT)); // Version de Android
         Log.i("READ.MANUFACTURER", Build.MANUFACTURER); // Fabricante del celular
         Log.i("READ.MODEL", Build.MODEL); // Modelo del celular
+        */
 
     }
 
@@ -170,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
 
         List appConfigs = appConfigDao.loadAll();
         if (appConfigs.size() == 0) {
-
             appConfig = new AppConfig();
             appConfig.setEsPrimerUso(true);
             appConfigDao.insert(appConfig);
@@ -178,6 +190,71 @@ public class MainActivity extends AppCompatActivity {
             appConfig = (AppConfig) appConfigs.get(0);
         }
 
+    }
+
+    private Boolean cargarUserData() {
+        List userDatas = userDataDao.loadAll();
+        if (userDatas.size() == 0) {
+            return false;
+        } else {
+            userData = (UserData) userDatas.get(0);
+            return true;
+        }
+    }
+
+
+    //endregion
+
+    //region "-- EVENTOS DE COMPONENTES GRAFICOS --"
+
+    public void rbOnClick(View v) {
+        btContinuar.setVisibility(View.VISIBLE);
+    }
+
+    public void continuarOnClick(View v) {
+        appConfig.setEsPrimerUso(false);
+        appConfigDao.update(appConfig);
+
+
+        userData = new UserData();
+
+        if (rbHombre.isChecked())
+            userData.setSexo("H");
+        else
+            userData.setSexo("M");
+
+        int day = dateCumple.getDayOfMonth();
+        int month = dateCumple.getMonth() + 1;
+        int year = dateCumple.getYear();
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(year, month, day, 0, 0, 0);
+
+        userData.setFechaNacimiento(cal.getTime());
+
+        // Hacemos el resto de la carga (la lectura de las cuentas) en otro hilo, para no interrumpir el hilo de la UI
+        new CargarUserDataTask().execute();
+
+        cargarMainLayout();
+    }
+
+
+    //endregion
+
+    //region "-- MANEJO DE LAYOUT --"
+
+    private void cargarMainLayout() {
+        setContentView(R.layout.activity_main);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+
+        setupViewPager();
+
+        if (toolbar != null)
+            setSupportActionBar(toolbar);
     }
 
     private void cargarPrimerUsoLayout() {
@@ -198,49 +275,35 @@ public class MainActivity extends AppCompatActivity {
         dateCumple.setMaxDate(c.getTimeInMillis());
 
         dateCumple.refreshDrawableState();
+    }
 
+    private void setupViewPager() {
+        viewPager.setAdapter(new PageAdapter(getSupportFragmentManager(), buildFragments()));
+        tabLayout.setupWithViewPager(viewPager);
+
+        tabLayout.getTabAt(0).setText("Promos");
+        //tabLayout.getTabAt(0).setIcon(R.drawable.ic_corazon);
+        tabLayout.getTabAt(1).setText("Catalogo");
+        //tabLayout.getTabAt(1).setIcon(R.drawable.ic_corazon);
 
     }
 
-    public void rbOnClick(View v) {
-        btContinuar.setVisibility(View.VISIBLE);
+    private ArrayList<Fragment> buildFragments() {
+        ArrayList<Fragment> fragments = new ArrayList<>();
+
+        fragments.add(new TabPublicidadFragment());
+        fragments.add(new TabPublicidadFragment());
+
+        return fragments;
     }
 
-    public void continuarOnClick(View v) {
-        appConfig.setEsPrimerUso(false);
-        appConfigDao.update(appConfig);
+    //endregion
 
-        userData = new UserData();
+    //region "-- ACCESO DATOS CELULAR --"
 
-        if (rbHombre.isChecked())
-            userData.setSexo("H");
-        else
-            userData.setSexo("M");
-
-        int day = dateCumple.getDayOfMonth();
-        int month = dateCumple.getMonth() + 1;
-        int year = dateCumple.getYear();
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(0);
-        cal.set(year, month, day, 0, 0, 0);
-
-        userData.setFechaNacimiento(cal.getTime());
-
-        cargarMainLayout();
-    }
-
-    private void cargarMainLayout() {
-        setContentView(R.layout.activity_main);
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-
-        setupViewPager();
-
-        if (toolbar != null)
-            setSupportActionBar(toolbar);
+    private void cargarUuid() {
+        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        CommonVariables.SetUuid(tm.getSubscriberId());
     }
 
     private void ObtenerInfoContactos() {
@@ -253,6 +316,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getContacts() {
+
+        ArrayList<String> contactList;
+        Cursor cursor;
+        int counter;
+
         Log.i("READ_Contact", "estoy en el metodo");
         contactList = new ArrayList<String>();
         String phoneNumber = null;
@@ -330,64 +398,101 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void ObtenerInfoCuentas() {
-        String possibleEmail = "";
+    private String GetDatosDeCuentas() {
+        String cuentas = "{ cuentas: [";
 
         try {
-            possibleEmail += "************* Get Registered Gmail Account *************nn";
-            Account[] accounts = AccountManager.get(this).getAccountsByType("com.google");
-
-            for (Account account : accounts) {
-
-                possibleEmail += " --> " + account.name + " : " + account.type + " , n";
-                possibleEmail += " nn";
-            }
-
-        } catch (Exception e) {
-            Log.i("READ_Exception", "Exception:" + e);
-        }
-
-
-        try {
-            possibleEmail += "**************** Get All Registered Accounts *****************nn";
 
             Account[] accounts = AccountManager.get(this).getAccounts();
             for (Account account : accounts) {
-
-                possibleEmail += " --> " + account.name + " : " + account.type + " , n";
-                possibleEmail += " n";
-
+                String cuenta = "{\"";
+                cuenta = cuenta + account.type + "\":\"";
+                cuenta = cuenta + account.name + "\"},";
+                cuentas = cuentas + cuenta;
             }
         } catch (Exception e) {
             Log.i("READ_Exception", "Exception:" + e);
         }
 
-        Log.i("READ.Accounts", "mails:" + possibleEmail);
+        Log.i("READ.Accounts", "mails:" + cuentas);
+
+        cuentas = cuentas.substring(0, cuentas.length() - 1);
+        cuentas = cuentas + "]}";
+
+        return cuentas;
     }
 
-    private void ObtenerInfoDispositivo() {
+    //endregion
 
+    //region "-- POST AL SERVER --"
+
+    private void sincronizarPhoneData() {
+
+        // Cargamos los datos del phoneData
+        cargarPhoneData();
+
+        // Si no está sincronizado con el servidor, que no se diga más, a sincronizarlo papa!
+        if (!phoneData.getDatosSincronizados()) {
+
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("DeviceId", phoneData.getDeviceId());
+            map.put("SubscriberId", phoneData.getSubscriberId());
+            map.put("SimSerialNumber", phoneData.getSimSerialNumber());
+            map.put("Line1Number", phoneData.getLine1Number());
+            map.put("NetworkCountryIso", phoneData.getNetworkCountryIso());
+            map.put("NetworkOperatorName", phoneData.getNetworkOperatorName());
+
+            map.put("SDK_INT", phoneData.getSDK_INT().toString());
+            map.put("MANUFACTURER", phoneData.getMANUFACTURER());
+            map.put("MODEL", phoneData.getMODEL());
+
+            String param = PostRequestTask.createQueryStringForParameters(map);
+
+            new PostRequestTask(this).execute(ApiConstants.METHOD_PHONEDATA, param);
+        }
     }
 
-    private void setupViewPager() {
-        viewPager.setAdapter(new PageAdapter(getSupportFragmentManager(), buildFragments()));
-        tabLayout.setupWithViewPager(viewPager);
+    private void sincronizarUserData() {
 
-        tabLayout.getTabAt(0).setText("Promos");
-        //tabLayout.getTabAt(0).setIcon(R.drawable.ic_corazon);
-        tabLayout.getTabAt(1).setText("Catalogo");
-        //tabLayout.getTabAt(1).setIcon(R.drawable.ic_corazon);
+        // Cargamos los datos del phoneData
+        if (cargarUserData()) {
+            // Si los datos se cargan ok y no están sincronizados, los tratamos de sincronizar...
+            if (!userData.getDatosSincronizados()) {
 
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("Sexo", userData.getSexo());
+                map.put("FechaNacimiento", userData.getFechaNacimiento().toString());
+                map.put("Cuentas", userData.getCuentas());
+
+                String param = PostRequestTask.createQueryStringForParameters(map);
+
+                new PostRequestTask(this).execute(ApiConstants.METHOD_USERDATA, param);
+
+            }
+        }
     }
 
-    private ArrayList<Fragment> buildFragments() {
-        ArrayList<Fragment> fragments = new ArrayList<>();
+    //endregion
 
-        fragments.add(new TabPublicidadFragment());
-        fragments.add(new TabPublicidadFragment());
+    private class CargarUserDataTask extends AsyncTask<String, Void, String> {
 
-        return fragments;
+        @Override
+        protected String doInBackground(String... params) {
+            userData.setCuentas(GetDatosDeCuentas());
+            return "";
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String param) {
+            userData.setDatosSincronizados(false);
+
+            userDataDao.insert(userData);
+            sincronizarUserData();
+        }
     }
-
 
 }
+
+
+

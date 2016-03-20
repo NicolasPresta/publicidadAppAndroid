@@ -1,6 +1,5 @@
 package com.example.presta.publicidadexample.rest.model;
 
-import com.example.presta.publicidadexample.entities.Publicidad;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
