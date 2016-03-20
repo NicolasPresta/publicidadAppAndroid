@@ -202,7 +202,6 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
         }
     }
 
-
     //endregion
 
     //region "-- EVENTOS DE COMPONENTES GRAFICOS --"
@@ -422,6 +421,25 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
         return cuentas;
     }
 
+    private class CargarUserDataTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            userData.setCuentas(GetDatosDeCuentas());
+            return "";
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String param) {
+            userData.setDatosSincronizados(false);
+
+            userDataDao.insert(userData);
+            sincronizarUserData();
+        }
+    }
+
+
     //endregion
 
     //region "-- POST AL SERVER --"
@@ -473,24 +491,6 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
     }
 
     //endregion
-
-    private class CargarUserDataTask extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            userData.setCuentas(GetDatosDeCuentas());
-            return "";
-        }
-
-        // onPostExecute displays the results of the AsyncTask.
-        @Override
-        protected void onPostExecute(String param) {
-            userData.setDatosSincronizados(false);
-
-            userDataDao.insert(userData);
-            sincronizarUserData();
-        }
-    }
 
 }
 
