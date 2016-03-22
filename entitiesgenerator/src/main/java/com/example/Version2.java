@@ -1,20 +1,24 @@
 package com.example;
 
-import java.io.Console;
-
-import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
-import de.greenrobot.daogenerator.Property;
 import de.greenrobot.daogenerator.Schema;
-import de.greenrobot.daogenerator.ToMany;
 
+/**
+ * Version 1 of the Schema definition
+ *
+ * @author Jeremy
+ */
+public class Version2 extends SchemaVersion {
 
-public class EntitiesGenerator {
+    /**
+     * Constructor
+     *
+     * @param current
+     */
+    public Version2(boolean current) {
+        super(current);
 
-    private static final String PROJECT_DIR = System.getProperty("user.dir").replace("\\", "/");
-
-    public static void main(String args[]) throws Exception {
-        Schema schema = new Schema(1, "com.example.presta.publicidadexample.dataAccess.model");
+        Schema schema = getSchema();
 
         Entity appConfig = schema.addEntity("AppConfig");
         appConfig.addIdProperty();
@@ -39,10 +43,14 @@ public class EntitiesGenerator {
         phoneData.addStringProperty("MANUFACTURER");
         phoneData.addStringProperty("MODEL");
         phoneData.addBooleanProperty("datosSincronizados");
+    }
 
-
-        new DaoGenerator().generateAll(schema, PROJECT_DIR  + "/app/src/main/java");
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getVersionNumber() {
+        return 2;
     }
 
 }

@@ -1,7 +1,7 @@
 apply plugin: 'application'
 apply plugin: 'java'
 
-mainClassName = "com.example.EntitiesGenerator"
+mainClassName = "com.example.SchemaGenerator"
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])

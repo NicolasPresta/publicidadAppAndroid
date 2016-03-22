@@ -19,7 +19,7 @@ public class DaoSessionAccesor {
 
     public static DaoSession GetDaoSession (Context context){
         if(daoSession == null) {
-            DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "app-db", null);
+            UpgradeHelper helper = new UpgradeHelper(context, "app-db", null);
             SQLiteDatabase db = helper.getWritableDatabase();
             DaoMaster daoMaster = new DaoMaster(db);
             daoSession = daoMaster.newSession();
