@@ -1,10 +1,15 @@
 package com.example.presta.publicidadexample.ui.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +36,7 @@ public class PromocionDetalleActivity extends AppCompatActivity {
     String descripcion;
     String imgURL;
     Integer id;
+    String urlCompartir;
 
     private PublicidadAdapter adapter;
 
@@ -38,7 +44,7 @@ public class PromocionDetalleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_promocion_detalle);
-
+        setToolbar();// Añadir action bar
 
         publicidadTitulo = (TextView) this.findViewById(R.id.txt_titulo);
         publicidadDescripcion = (TextView) this.findViewById(R.id.txt_descripcion);
@@ -63,6 +69,55 @@ public class PromocionDetalleActivity extends AppCompatActivity {
         requestPublicidades();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.detalle, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            switch (item.getItemId()) {
+                // Respond to the action bar's Up/Home button
+                case android.R.id.home:
+                    supportFinishAfterTransition();
+                    return true;
+            }
+        else {
+            switch (item.getItemId()) {
+                case R.id.action_favorite:
+                    showSnackBar("favorito!");
+                    return true;
+                case R.id.action_share:
+                    compartir();
+                    return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void compartir() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, urlCompartir);
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, "Compartir con..."));
+        //startActivity(sendIntent);
+    }
+
+    private void showSnackBar(String msg) {
+
+        Snackbar
+                .make(findViewById(R.id.scroll), msg, Snackbar.LENGTH_LONG)
+                .show();
+    }
+
+    private void setToolbar() {
+        // Añadir la Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
 
     public void setTitulo(String titulo) {
         publicidadTitulo.setText(titulo);
@@ -116,25 +171,15 @@ public class PromocionDetalleActivity extends AppCompatActivity {
 
     }
 
-    private String getUuid(){
+    private String getUuid() {
         return ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getSubscriberId();
     }
 
     private void cargarPublicidad(Publicidad publicidad) {
         setVigencia(publicidad.getVigenciaHasta());
         setCondiciones(publicidad.getCondiciones());
-    }
+        urlCompartir = publicidad.getUrlCompartir();
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            switch (item.getItemId()) {
-                // Respond to the action bar's Up/Home button
-                case android.R.id.home:
-                    supportFinishAfterTransition();
-                    return true;
-            }
-        return super.onOptionsItemSelected(item);
     }
 
 }

@@ -18,13 +18,14 @@ public class Publicidad {
 
     //region "-- CONSTRUCTORS --"
 
-    public Publicidad(String titulo, String descripcion, String vigenciaDesde, String vigenciaHasta, String condiciones, String img) {
+    public Publicidad(String titulo, String descripcion, String vigenciaDesde, String vigenciaHasta, String condiciones, String img, String urlCompartir) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.vigenciaDesde = vigenciaDesde;
         this.vigenciaHasta = vigenciaHasta;
         this.condiciones = condiciones;
         this.img = img;
+        this.urlCompartir = urlCompartir;
     }
 
     //endregion
@@ -51,6 +52,9 @@ public class Publicidad {
 
     @SerializedName("img")
     private String img;
+
+    @SerializedName("urlCompartir")
+    private String urlCompartir;
 
     //endregion
 
@@ -84,6 +88,9 @@ public class Publicidad {
         this.img = img;
     }
 
+    public void setUrlCompartir(String URLCompartir) {
+        this.urlCompartir = URLCompartir;
+    }
 
     //endregion
 
@@ -115,6 +122,10 @@ public class Publicidad {
 
     public String getCondiciones() {
         return condiciones;
+    }
+
+    public String getUrlCompartir() {
+        return urlCompartir;
     }
 
     //endregion

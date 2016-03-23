@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Comercio falso 123</string>
+
+    <string name="action_share">Compartir</string>
+    <string name="action_favorite">Añadir a favoritos</string>
+
 </resources>
