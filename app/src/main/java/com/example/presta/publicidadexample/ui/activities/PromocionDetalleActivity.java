@@ -3,6 +3,7 @@ package com.example.presta.publicidadexample.ui.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,6 +47,9 @@ public class PromocionDetalleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_promocion_detalle);
         setToolbar();// Añadir action bar
 
+        CollapsingToolbarLayout collapser = (CollapsingToolbarLayout) findViewById(R.id.collapser);
+        collapser.setTitle(getResources().getString(R.string.promocion_title));
+
         publicidadTitulo = (TextView) this.findViewById(R.id.txt_titulo);
         publicidadDescripcion = (TextView) this.findViewById(R.id.txt_descripcion);
         publicidadImagen = (ImageView) this.findViewById(R.id.img_publicidad);
@@ -84,34 +88,29 @@ public class PromocionDetalleActivity extends AppCompatActivity {
                     supportFinishAfterTransition();
                     return true;
             }
-        else {
-            switch (item.getItemId()) {
-                case R.id.action_favorite:
-                    showSnackBar("favorito!");
-                    return true;
-                case R.id.action_share:
-                    compartir();
-                    return true;
-            }
+
+        switch (item.getItemId()) {
+            case R.id.action_favorite:
+                //showSnackBar("favorito!");
+                return true;
+            case R.id.action_share:
+                compartir();
+                return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
     private void compartir() {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, urlCompartir);
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.share_subject));
+        sendIntent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.share_msj) + urlCompartir);
         sendIntent.setType("text/plain");
-        startActivity(Intent.createChooser(sendIntent, "Compartir con..."));
+        startActivity(Intent.createChooser(sendIntent, getResources().getString(R.string.share_title)));
         //startActivity(sendIntent);
     }
 
-    private void showSnackBar(String msg) {
-
-        Snackbar
-                .make(findViewById(R.id.scroll), msg, Snackbar.LENGTH_LONG)
-                .show();
-    }
 
     private void setToolbar() {
         // Añadir la Toolbar

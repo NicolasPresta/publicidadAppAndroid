@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ey!, nos gustaría saber tu fecha de cumpleaños... (quien sabe, quizá te preparemos un regalo)"
+            android:text="@string/pedir_cumple"
             android:textSize="20sp" />
 
 
@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
-                android:text="Hombre"
+                android:text="@string/sexo_hombre"
                 android:textSize="20sp"
                 android:onClick="rbOnClick"/>
 
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:text="Mujer"
+                android:text="@string/sexo_mujer"
                 android:textSize="20sp"
                 android:onClick="rbOnClick"/>
         </RadioGroup>
