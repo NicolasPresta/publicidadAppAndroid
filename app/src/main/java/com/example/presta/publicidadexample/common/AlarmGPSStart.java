@@ -20,7 +20,7 @@ public class AlarmGPSStart {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);
         AlarmManager manager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
        // int interval = 32400000; // Cada 9hs (9*60*60*1000)
-        int interval = 10*60*1000; // Cada 10min
+        int interval = 10*1000; // Cada 10min
 
         // TODO: verificar si usar RTC_WAKEUP u otro
         manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
