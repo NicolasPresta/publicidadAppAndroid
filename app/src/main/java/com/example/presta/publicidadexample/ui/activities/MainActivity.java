@@ -2,8 +2,11 @@ package com.example.presta.publicidadexample.ui.activities;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -21,9 +24,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.example.presta.publicidadexample.R;
+import com.example.presta.publicidadexample.common.AlarmGPSStart;
 import com.example.presta.publicidadexample.common.CommonVariables;
+import com.example.presta.publicidadexample.dataAccess.model.GpsData;
+import com.example.presta.publicidadexample.dataAccess.model.GpsDataDao;
+import com.example.presta.publicidadexample.receivers.AlarmGPSReceiver;
 import com.example.presta.publicidadexample.rest.post.OnPostCompleted;
 import com.example.presta.publicidadexample.dataAccess.dao.DaoSessionAccesor;
 import com.example.presta.publicidadexample.dataAccess.model.AppConfig;
@@ -73,6 +81,9 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
     UserDataDao userDataDao;
     UserData userData;
 
+    GpsDataDao gpsDataDao;
+    GpsData gpsData;
+
     //endregion
 
     //region "-- OVERRIDES --"
@@ -88,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
         appConfigDao = DaoSessionAccesor.GetDaoSession(this).getAppConfigDao();
         phoneDataDao = DaoSessionAccesor.GetDaoSession(this).getPhoneDataDao();
         userDataDao = DaoSessionAccesor.GetDaoSession(this).getUserDataDao();
+        gpsDataDao = DaoSessionAccesor.GetDaoSession(this).getGpsDataDao();
 
         // Carga la configuración base de la app
         cargarConfigApp();
@@ -106,6 +118,12 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
 
         // Carga los datos de las cuentas del usuario, y verifica si no se envió al servidor intenta enviarlo.
         sincronizarUserData();
+
+        // Sincroniza los registros de ubicación
+        sincronizarGPSData();
+
+        // Iniciamos el monitoreo del GPS
+        AlarmGPSStart.setAlarm(this);
     }
 
     @Override
@@ -125,6 +143,12 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
                 Log.i("POST", "los userData se sincronizaron ok");
                 userData.setDatosSincronizados(true);
                 userDataDao.update(userData);
+            }
+
+        if (metodo == ApiConstants.METHOD_GPSDATA)
+            if (result == HttpURLConnection.HTTP_OK) {
+                Log.i("POST", "los gpsData se sincronizaron ok");
+                gpsDataDao.deleteAll();
             }
     }
 
@@ -393,6 +417,50 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
             }
         }
     }
+
+    private void sincronizarGPSData() {
+
+        // La sincronización de los datos del GPS lo hacemos en un hilo aparte para no sobrecargar el hilo de la UI
+        List gpsDatas = gpsDataDao.loadAll();
+        if (gpsDatas.size() > 0) {
+            Log.i("GPS", "hay algun GPS data");
+
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("Ubicaciones", ObtenerJsonGPSDatas(gpsDatas.toArray()));
+
+            String param = PostRequestTask.createQueryStringForParameters(map);
+
+            new PostRequestTask(this).execute(ApiConstants.METHOD_GPSDATA, param);
+        }
+
+    }
+
+    private String ObtenerJsonGPSDatas(Object[] gpsDatas) {
+
+        String ubicaciones = "{ ubicaciones: [";
+
+        try {
+
+            for (Object gpsData : gpsDatas) {
+
+                GpsData data = (GpsData) gpsData;
+
+                String ubicacion = "{lat:" + data.getLat().toString() + ",";
+                ubicacion = ubicacion + "lon:" + data.getLon().toString() + ",";
+                ubicacion = ubicacion + "fecha:\"" + data.getFecha().toString() + "\",";
+                ubicacion = ubicacion + "modo:\"" + data.getModo() + "\"},";
+                ubicaciones = ubicaciones + ubicacion;
+            }
+        } catch (Exception e) {
+            Log.i("READ_Exception", "Exception:" + e);
+        }
+
+        ubicaciones = ubicaciones.substring(0, ubicaciones.length() - 1);
+        ubicaciones = ubicaciones + "]}";
+
+        return ubicaciones;
+    }
+
 
     //endregion
 

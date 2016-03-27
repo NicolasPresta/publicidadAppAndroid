@@ -116,6 +116,8 @@ public class PromocionDetalleActivity extends AppCompatActivity {
         // Añadir la Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     public void setTitulo(String titulo) {

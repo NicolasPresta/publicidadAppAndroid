@@ -9,6 +9,7 @@
     <color name="secondary_text">#727272</color>
     <color name="icons">#212121</color>
     <color name="divider">#B6B6B6</color>
+    <color name="primary_transparent">#a8ff9800</color>
 
     <color name="tab_no_seleccionado_textColor">#FFE0B2</color>
     <color name="tab_seleccionado_textColor">#ffffff</color>

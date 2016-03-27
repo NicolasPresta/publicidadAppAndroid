@@ -34,7 +34,8 @@ public class SchemaGenerator {
 
         // Agregamos la lista de las versiones a generar
         versions.add(new Version1(false));
-        versions.add(new Version2(true));
+        versions.add(new Version2(false));
+        versions.add(new Version3(true));
 
         validateSchemas(versions);
 

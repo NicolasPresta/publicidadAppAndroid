@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.presta.publicidadexample.dataAccess.dao.Migrations.MigrateV1ToV2;
 import com.example.presta.publicidadexample.dataAccess.dao.Migrations.Migration;
 import com.example.presta.publicidadexample.dataAccess.dao.Migrations.MigrationImpl;
+import com.example.presta.publicidadexample.dataAccess.model.GpsDataDao;
 
 /**
  * Migration from Version2 to Version3
@@ -21,7 +22,8 @@ public class MigrateV2ToV3 extends MigrationImpl {
                               int currentVersion) {
         super.prepareMigration(db, currentVersion);
 
-        // TODO : Apply required database update
+        // Creamos la tabla de GPS
+        GpsDataDao.createTable(db, false);
 
         return getMigratedVersion();
     }

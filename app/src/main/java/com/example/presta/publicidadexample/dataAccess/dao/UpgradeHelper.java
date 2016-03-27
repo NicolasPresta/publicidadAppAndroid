@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.presta.publicidadexample.dataAccess.dao.Migrations.MigrateV1ToV2;
+import com.example.presta.publicidadexample.dataAccess.dao.Migrations.MigrateV2ToV3;
 import com.example.presta.publicidadexample.dataAccess.model.DaoMaster;
 
 /**
@@ -27,9 +28,14 @@ public class UpgradeHelper extends DaoMaster.OpenHelper {
             case 2:
                 new MigrateV1ToV2().applyMigration(db, oldVersion);
                 break;
-           /* case 3:
+            case 3:
                 new MigrateV2ToV3().applyMigration(db, oldVersion);
-                break;*/
+                break;
+            /*
+             case 4:
+                new MigrateV3ToV4().applyMigration(db, oldVersion);
+                break;
+             */
             default:
                 return;
         }
