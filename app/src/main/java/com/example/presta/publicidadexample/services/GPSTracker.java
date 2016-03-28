@@ -80,9 +80,8 @@ public class GPSTracker extends Service implements LocationListener {
                         }
 
                     }
-                }
-                else {
-                    // if GPS Enabled get lat/long using GPS Services
+                } else {
+                    // Solo intentamos acceder al GPS fino (más costoso) si es que el network no funciona.
                     if (isGPSEnabled) {
                         if (location == null) {
                             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
@@ -103,6 +102,8 @@ public class GPSTracker extends Service implements LocationListener {
                 }
             }
 
+        } catch (SecurityException e) {
+            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -116,7 +117,13 @@ public class GPSTracker extends Service implements LocationListener {
      */
     public void stopUsingGPS() {
         if (locationManager != null) {
-            locationManager.removeUpdates(GPSTracker.this);
+            try {
+                locationManager.removeUpdates(GPSTracker.this);
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -157,7 +164,7 @@ public class GPSTracker extends Service implements LocationListener {
 
     @Override
     public void onProviderDisabled(String provider) {
-        Log.d("GPS", "onProviderDisabled " + provider );
+        Log.d("GPS", "onProviderDisabled " + provider);
     }
 
     @Override
