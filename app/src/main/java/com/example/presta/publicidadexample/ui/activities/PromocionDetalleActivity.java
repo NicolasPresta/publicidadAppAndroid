@@ -4,22 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.presta.publicidadexample.R;
-import com.example.presta.publicidadexample.rest.model.Publicidad;
-import com.example.presta.publicidadexample.rest.PublicidadesAdapter;
-import com.example.presta.publicidadexample.rest.model.PublicidadResponse;
-import com.example.presta.publicidadexample.ui.adapter.PublicidadAdapter;
+import com.example.presta.publicidadexample.rest.get.jsonModel.Publicidad;
+import com.example.presta.publicidadexample.rest.get.ApiGetAdapter;
+import com.example.presta.publicidadexample.rest.get.jsonModel.PublicidadResponse;
+import com.example.presta.publicidadexample.ui.adapter.PublicidadRecyclerAdapter;
 import com.squareup.picasso.Picasso;
 
 import rx.Subscriber;
@@ -39,7 +37,7 @@ public class PromocionDetalleActivity extends AppCompatActivity {
     Integer id;
     String urlCompartir;
 
-    private PublicidadAdapter adapter;
+    private PublicidadRecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +66,7 @@ public class PromocionDetalleActivity extends AppCompatActivity {
         setDescripcion(descripcion);
         setImg(imgURL);
 
-        adapter = new PublicidadAdapter(this);
+        adapter = new PublicidadRecyclerAdapter(this);
 
         requestPublicidades();
     }
@@ -151,7 +149,7 @@ public class PromocionDetalleActivity extends AppCompatActivity {
     }
 
     private void requestPublicidades() {
-        PublicidadesAdapter.getById(id)
+        ApiGetAdapter.getById(id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<PublicidadResponse>() {
                     @Override

@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.presta.publicidadexample.R;
-import com.example.presta.publicidadexample.rest.PublicidadesAdapter;
-import com.example.presta.publicidadexample.rest.model.PublicidadesResponse;
-import com.example.presta.publicidadexample.ui.adapter.PublicidadAdapter;
+import com.example.presta.publicidadexample.rest.get.ApiGetAdapter;
+import com.example.presta.publicidadexample.rest.get.jsonModel.PublicidadesResponse;
+import com.example.presta.publicidadexample.ui.adapter.PublicidadRecyclerAdapter;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -25,7 +25,7 @@ public class TabPublicidadFragment extends Fragment {
     //region "-- ATRIBUTOS --"
 
     private RecyclerView mRecycler;
-    private PublicidadAdapter adapter;
+    private PublicidadRecyclerAdapter adapter;
 
     //endregion
 
@@ -42,7 +42,7 @@ public class TabPublicidadFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new PublicidadAdapter(getActivity());
+        adapter = new PublicidadRecyclerAdapter(getActivity());
     }
 
     @Override
@@ -56,7 +56,7 @@ public class TabPublicidadFragment extends Fragment {
         setupList();
 
         // Consulta las publicidades a la API
-        requestPublicidades();
+        requestInicialPublicidades();
 
         return root;
     }
@@ -64,7 +64,6 @@ public class TabPublicidadFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
     }
 
     //endregion
@@ -77,8 +76,8 @@ public class TabPublicidadFragment extends Fragment {
         // mRecycler.addItemDecoration(new ItemDividerDecoration(getActivity()));
     }
 
-    private void requestPublicidades() {
-        PublicidadesAdapter.getAll()
+    private void requestInicialPublicidades() {
+        ApiGetAdapter.getAll()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<PublicidadesResponse>() {
                     @Override

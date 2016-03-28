@@ -1,31 +1,22 @@
-package com.example.presta.publicidadexample.rest;
-
-import android.app.Application;
-import android.content.Context;
-import android.telephony.TelephonyManager;
+package com.example.presta.publicidadexample.rest.get;
 
 import com.example.presta.publicidadexample.common.CommonVariables;
-import com.example.presta.publicidadexample.rest.model.PublicidadResponse;
-import com.example.presta.publicidadexample.rest.model.PublicidadesResponse;
-
-import java.lang.reflect.Type;
+import com.example.presta.publicidadexample.rest.ApiConstants;
+import com.example.presta.publicidadexample.rest.get.jsonModel.PublicidadResponse;
+import com.example.presta.publicidadexample.rest.get.jsonModel.PublicidadesResponse;
 
 import retrofit.RestAdapter;
-import retrofit.converter.ConversionException;
-import retrofit.converter.Converter;
-import retrofit.mime.TypedInput;
-import retrofit.mime.TypedOutput;
 import rx.Observable;
 
 /**
  * Created by Presta on 10/03/2016.
  */
-public class PublicidadesAdapter {
+public class ApiGetAdapter {
 
-    private static IPublicidadesService API_SERVICE;
+    private static IApiGetService API_SERVICE;
 
-
-    public static IPublicidadesService getApiService() {
+    // Retorna el servicio base para llamar al servidor, es un singleton, solo se intancia la primera vez que se llama.
+    public static IApiGetService getApiService() {
         if (API_SERVICE == null) {
 
             RestAdapter adapter = new RestAdapter.Builder()
@@ -33,12 +24,13 @@ public class PublicidadesAdapter {
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .build();
 
-            API_SERVICE = adapter.create(IPublicidadesService.class);
+            API_SERVICE = adapter.create(IApiGetService.class);
         }
 
         return API_SERVICE;
     }
 
+    //
     public static Observable<PublicidadesResponse> getAll() {
         return getApiService().getAll(CommonVariables.GetUuid());
     }

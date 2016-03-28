@@ -18,6 +18,10 @@ import java.util.Map;
 /**
  * Created by Presta on 20/03/2016.
  */
+// Abstrae una tarea de ejecutar un POST al servidor.
+    // El contenido que viaja en el request es STRING y se pasa por parametro
+    // La tarea es asincronica, y para conocer el resultado del post se implementa un callback.
+    // El callback es el metodo onPostCompleted y lo debe implementar el invocador de esta clase.
 public class PostRequestTask extends AsyncTask<String, Void, Integer> {
 
     private static final char PARAMETER_DELIMITER = '&';
@@ -75,7 +79,7 @@ public class PostRequestTask extends AsyncTask<String, Void, Integer> {
             if (postParameters != null) {
 
                 // Agregamos el uuid que tiene que estar en todos los request
-                postParameters = "uuid=" + CommonVariables.GetUuid().toString() + "&" + postParameters;
+                postParameters = "uuid=" + CommonVariables.GetUuid() + "&" + postParameters;
 
                 Log.i(LOGGER_TAG, "POST parameters: " + postParameters);
 

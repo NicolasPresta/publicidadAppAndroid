@@ -2,17 +2,10 @@ package com.example.presta.publicidadexample.ui.activities;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -24,14 +17,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import com.example.presta.publicidadexample.R;
 import com.example.presta.publicidadexample.common.AlarmGPSStart;
 import com.example.presta.publicidadexample.common.CommonVariables;
 import com.example.presta.publicidadexample.dataAccess.model.GpsData;
 import com.example.presta.publicidadexample.dataAccess.model.GpsDataDao;
-import com.example.presta.publicidadexample.receivers.AlarmGPSReceiver;
 import com.example.presta.publicidadexample.rest.post.OnPostCompleted;
 import com.example.presta.publicidadexample.dataAccess.dao.DaoSessionAccesor;
 import com.example.presta.publicidadexample.dataAccess.model.AppConfig;
@@ -45,7 +36,6 @@ import com.example.presta.publicidadexample.rest.post.PostRequestTask;
 import com.example.presta.publicidadexample.ui.adapter.PageAdapter;
 import com.example.presta.publicidadexample.ui.fragments.TabPublicidadFragment;
 
-import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -130,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
     public void onPostCompleted(String metodo, Integer result) {
 
         // Si la ejecución del post del phoneData fue exitosa, marcamos el registro como ya actualizado y nunca mas nos preocuparemos por él :)
-        if (metodo == ApiConstants.METHOD_PHONEDATA)
+        if (metodo == ApiConstants.POST_METHOD_PHONEDATA)
             if (result == HttpURLConnection.HTTP_OK) {
                 Log.i("POST", "los phoneData se sincronizaron ok");
                 phoneData.setDatosSincronizados(true);
@@ -138,14 +128,14 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
             }
 
         // Idem para userData
-        if (metodo == ApiConstants.METHOD_USERDATA)
+        if (metodo == ApiConstants.POST_METHOD_USERDATA)
             if (result == HttpURLConnection.HTTP_OK) {
                 Log.i("POST", "los userData se sincronizaron ok");
                 userData.setDatosSincronizados(true);
                 userDataDao.update(userData);
             }
 
-        if (metodo == ApiConstants.METHOD_GPSDATA)
+        if (metodo == ApiConstants.POST_METHOD_GPSDATA)
             if (result == HttpURLConnection.HTTP_OK) {
                 Log.i("POST", "los gpsData se sincronizaron ok");
                 gpsDataDao.deleteAll();
@@ -395,7 +385,7 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
 
             String param = PostRequestTask.createQueryStringForParameters(map);
 
-            new PostRequestTask(this).execute(ApiConstants.METHOD_PHONEDATA, param);
+            new PostRequestTask(this).execute(ApiConstants.POST_METHOD_PHONEDATA, param);
         }
     }
 
@@ -413,7 +403,7 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
 
                 String param = PostRequestTask.createQueryStringForParameters(map);
 
-                new PostRequestTask(this).execute(ApiConstants.METHOD_USERDATA, param);
+                new PostRequestTask(this).execute(ApiConstants.POST_METHOD_USERDATA, param);
             }
         }
     }
@@ -430,7 +420,7 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
 
             String param = PostRequestTask.createQueryStringForParameters(map);
 
-            new PostRequestTask(this).execute(ApiConstants.METHOD_GPSDATA, param);
+            new PostRequestTask(this).execute(ApiConstants.POST_METHOD_GPSDATA, param);
         }
 
     }

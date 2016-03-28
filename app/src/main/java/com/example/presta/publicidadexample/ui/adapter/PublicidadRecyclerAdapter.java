@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.example.presta.publicidadexample.ui.activities.PromocionDetalleActivity;
 import com.example.presta.publicidadexample.R;
-import com.example.presta.publicidadexample.rest.model.Publicidad;
+import com.example.presta.publicidadexample.rest.get.jsonModel.Publicidad;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -25,12 +25,12 @@ import java.util.ArrayList;
 /**
  * Created by Presta on 10/03/2016.
  */
-public class PublicidadAdapter extends RecyclerView.Adapter<PublicidadAdapter.TagArtistViewHolder> {
+public class PublicidadRecyclerAdapter extends RecyclerView.Adapter<PublicidadRecyclerAdapter.TagArtistViewHolder> {
 
     ArrayList<Publicidad> publicidades;
     Context context;
 
-    public PublicidadAdapter(Context context) {
+    public PublicidadRecyclerAdapter(Context context) {
         this.context = context;
         this.publicidades = new ArrayList<>();
     }

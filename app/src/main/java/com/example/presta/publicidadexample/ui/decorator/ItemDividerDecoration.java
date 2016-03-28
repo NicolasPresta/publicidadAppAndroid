@@ -11,6 +11,7 @@ import com.example.presta.publicidadexample.R;
 /**
  * Created by Presta on 10/03/2016.
  */
+// Para agregar un decorator a los view del recycler
 public class ItemDividerDecoration extends RecyclerView.ItemDecoration {
     private Drawable mDivider;
 
