@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/menu_inicio"
+            android:icon="@drawable/ic_share"
+            android:title="Home" />
+
+        <item
+            android:id="@+id/menu_fila"
+            android:icon="@drawable/ic_share"
+            android:title="Hacer la fila!" />
+
+        <item
+            android:id="@+id/menu_destacados"
+            android:icon="@drawable/ic_share"
+            android:title="Destacados" />
+
+        <item
+            android:id="@+id/menu_promociones"
+            android:icon="@drawable/ic_share"
+            android:title="Promociones" />
+
+        <item
+            android:id="@+id/menu_catalogo"
+            android:icon="@drawable/ic_corazon"
+            android:title="Catalogo" />
+
+        <item
+            android:id="@+id/menu_sucursales"
+            android:icon="@drawable/ic_share"
+            android:title="Sucursales" />
+
+        <item
+            android:id="@+id/menu_tarjeta"
+            android:icon="@drawable/ic_share"
+            android:title="Tarjeta de descuentos" />
+
+    </group>
+</menu>

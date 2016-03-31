@@ -6,14 +6,20 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
@@ -21,8 +27,6 @@ import android.widget.RadioButton;
 import com.example.presta.publicidadexample.R;
 import com.example.presta.publicidadexample.common.AlarmGPSStart;
 import com.example.presta.publicidadexample.common.CommonVariables;
-import com.example.presta.publicidadexample.dataAccess.model.GpsData;
-import com.example.presta.publicidadexample.dataAccess.model.GpsDataDao;
 import com.example.presta.publicidadexample.rest.post.OnPostCompleted;
 import com.example.presta.publicidadexample.dataAccess.dao.DaoSessionAccesor;
 import com.example.presta.publicidadexample.dataAccess.model.AppConfig;
@@ -34,7 +38,8 @@ import com.example.presta.publicidadexample.dataAccess.model.UserDataDao;
 import com.example.presta.publicidadexample.rest.ApiConstants;
 import com.example.presta.publicidadexample.rest.post.PostRequestTask;
 import com.example.presta.publicidadexample.ui.adapter.PageAdapter;
-import com.example.presta.publicidadexample.ui.fragments.TabPublicidadFragment;
+import com.example.presta.publicidadexample.ui.fragments.DestacadosFragment;
+import com.example.presta.publicidadexample.ui.fragments.SucursalesFragment;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -46,7 +51,8 @@ import java.util.Map;
 /**
  * Created by Presta on 10/03/2016.
  */
-public class MainActivity extends AppCompatActivity implements OnPostCompleted {
+public class MainActivity extends AppCompatActivity
+        implements OnPostCompleted {
 
     //region "-- ATRIBUTOS PRIVADOS --"
 
@@ -54,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
     Toolbar toolbar;
     ViewPager viewPager;
     TabLayout tabLayout;
+    DrawerLayout drawerLayout;
+    NavigationView navView;
 
     // componentes de primerUsoLayout
     DatePicker dateCumple;
@@ -71,9 +79,6 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
     UserDataDao userDataDao;
     UserData userData;
 
-    GpsDataDao gpsDataDao;
-    GpsData gpsData;
-
     //endregion
 
     //region "-- OVERRIDES --"
@@ -89,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
         appConfigDao = DaoSessionAccesor.GetDaoSession(this).getAppConfigDao();
         phoneDataDao = DaoSessionAccesor.GetDaoSession(this).getPhoneDataDao();
         userDataDao = DaoSessionAccesor.GetDaoSession(this).getUserDataDao();
-        gpsDataDao = DaoSessionAccesor.GetDaoSession(this).getGpsDataDao();
+
 
         // Carga la configuración base de la app
         cargarConfigApp();
@@ -98,9 +103,13 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
         if (appConfig.getEsPrimerUso()) {
             cargarPrimerUsoLayout();
 
+            // Iniciamos el monitoreo del GPS
+            AlarmGPSStart.setAlarm(this);
+
         } else {
             // si no cargamos el layout principal
             cargarMainLayout();
+            cargarMenuLateral();
         }
 
         // Carga los datos del celular, y verifica si no se envió al servidor intenta enviarlo.
@@ -108,12 +117,6 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
 
         // Carga los datos de las cuentas del usuario, y verifica si no se envió al servidor intenta enviarlo.
         sincronizarUserData();
-
-        // Sincroniza los registros de ubicación
-        sincronizarGPSData();
-
-        // Iniciamos el monitoreo del GPS
-        AlarmGPSStart.setAlarm(this);
     }
 
     @Override
@@ -134,12 +137,19 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
                 userData.setDatosSincronizados(true);
                 userDataDao.update(userData);
             }
+    }
 
-        if (metodo == ApiConstants.POST_METHOD_GPSDATA)
-            if (result == HttpURLConnection.HTTP_OK) {
-                Log.i("POST", "los gpsData se sincronizaron ok");
-                gpsDataDao.deleteAll();
-            }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            //...
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     //endregion
@@ -250,10 +260,57 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
         cargarMainLayout();
     }
 
-
     //endregion
 
     //region "-- MANEJO DE LAYOUT --"
+
+    private void cargarMenuLateral() {
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navView = (NavigationView) findViewById(R.id.navview);
+
+        navView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                        boolean fragmentTransaction = false;
+                        Fragment fragment = null;
+
+                        switch (menuItem.getItemId()) {
+                            case R.id.menu_inicio:
+                                seleccionarTab(0);
+                                break;
+                            case R.id.menu_tarjeta:
+                                seleccionarTab(1);
+                                break;
+                            case R.id.menu_sucursales:
+                                seleccionarTab(2);
+                                break;
+                            case R.id.menu_fila:
+                                // TODO: invocar al activity de fila.
+                                break;
+                        }
+/*
+                        if (fragmentTransaction) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.content_frame, fragment)
+                                    .commit();
+
+                            menuItem.setChecked(true);
+                            getSupportActionBar().setTitle(menuItem.getTitle());
+                        }
+*/
+                        drawerLayout.closeDrawers();
+
+                        return true;
+                    }
+                });
+    }
+
+    void seleccionarTab(int pageIndex) {
+        viewPager.setCurrentItem(pageIndex);
+    }
 
     private void cargarMainLayout() {
         setContentView(R.layout.activity_main);
@@ -266,6 +323,10 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
 
         if (toolbar != null)
             setSupportActionBar(toolbar);
+
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_share);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     private void cargarPrimerUsoLayout() {
@@ -292,18 +353,20 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
         viewPager.setAdapter(new PageAdapter(getSupportFragmentManager(), buildFragments()));
         tabLayout.setupWithViewPager(viewPager);
 
-        tabLayout.getTabAt(0).setText("Promos");
+        tabLayout.getTabAt(0).setText("Destacados");
         //tabLayout.getTabAt(0).setIcon(R.drawable.ic_corazon);
-        tabLayout.getTabAt(1).setText("Catalogo");
+        tabLayout.getTabAt(1).setText("Tarjeta Descuentos");
         //tabLayout.getTabAt(1).setIcon(R.drawable.ic_corazon);
+        tabLayout.getTabAt(2).setText("Sucursales");
 
     }
 
     private ArrayList<Fragment> buildFragments() {
         ArrayList<Fragment> fragments = new ArrayList<>();
 
-        fragments.add(new TabPublicidadFragment());
-        fragments.add(new TabPublicidadFragment());
+        fragments.add(new DestacadosFragment());
+        fragments.add(new SucursalesFragment());
+        fragments.add(new SucursalesFragment());
 
         return fragments;
     }
@@ -406,49 +469,6 @@ public class MainActivity extends AppCompatActivity implements OnPostCompleted {
                 new PostRequestTask(this).execute(ApiConstants.POST_METHOD_USERDATA, param);
             }
         }
-    }
-
-    private void sincronizarGPSData() {
-
-        // La sincronización de los datos del GPS lo hacemos en un hilo aparte para no sobrecargar el hilo de la UI
-        List gpsDatas = gpsDataDao.loadAll();
-        if (gpsDatas.size() > 0) {
-            Log.i("GPS", "hay algun GPS data");
-
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("Ubicaciones", ObtenerJsonGPSDatas(gpsDatas.toArray()));
-
-            String param = PostRequestTask.createQueryStringForParameters(map);
-
-            new PostRequestTask(this).execute(ApiConstants.POST_METHOD_GPSDATA, param);
-        }
-
-    }
-
-    private String ObtenerJsonGPSDatas(Object[] gpsDatas) {
-
-        String ubicaciones = "{ ubicaciones: [";
-
-        try {
-
-            for (Object gpsData : gpsDatas) {
-
-                GpsData data = (GpsData) gpsData;
-
-                String ubicacion = "{lat:" + data.getLat().toString() + ",";
-                ubicacion = ubicacion + "lon:" + data.getLon().toString() + ",";
-                ubicacion = ubicacion + "fecha:\"" + data.getFecha().toString() + "\",";
-                ubicacion = ubicacion + "modo:\"" + data.getModo() + "\"},";
-                ubicaciones = ubicaciones + ubicacion;
-            }
-        } catch (Exception e) {
-            Log.i("READ_Exception", "Exception:" + e);
-        }
-
-        ubicaciones = ubicaciones.substring(0, ubicaciones.length() - 1);
-        ubicaciones = ubicaciones + "]}";
-
-        return ubicaciones;
     }
 
 

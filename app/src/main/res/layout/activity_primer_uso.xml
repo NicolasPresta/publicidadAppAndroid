@@ -8,20 +8,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="100">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="20"
+            android:layout_marginTop="20dp"
             android:text="@string/pedir_cumple"
             android:textSize="20sp" />
 
 
         <DatePicker
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="50"
             android:id="@+id/date_cumple"
             android:datePickerMode="spinner"
             android:layout_marginTop="20dp"
@@ -29,7 +33,8 @@
 
         <RadioGroup
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="20"
             android:layout_marginTop="30dp"
             android:orientation="horizontal">
 
@@ -52,18 +57,20 @@
                 android:onClick="rbOnClick"/>
         </RadioGroup>
 
+        <Button
+            android:id="@+id/btn_Continuar"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:text="Continuar"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            android:onClick="continuarOnClick"/>
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_Continuar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="30dp"
-        android:text="Continuar"
-        android:textSize="20sp"
-        android:visibility="invisible"
-        android:onClick="continuarOnClick"/>
+
 
 </FrameLayout>

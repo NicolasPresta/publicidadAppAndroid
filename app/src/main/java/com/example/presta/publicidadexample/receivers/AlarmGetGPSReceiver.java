@@ -16,7 +16,7 @@ import com.example.presta.publicidadexample.services.GPSTracker;
 
 import java.util.Calendar;
 
-public class AlarmGPSReceiver extends BroadcastReceiver {
+public class AlarmGetGPSReceiver extends BroadcastReceiver {
 
     GPSTracker gps;
     GpsDataDao gpsDataDao;

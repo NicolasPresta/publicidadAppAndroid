@@ -9,13 +9,13 @@ public class ApiConstants {
     //http://prueba1.nicolaspresta.com.ar/
 
     // IP.
-    //public static final String IP = "104.131.38.51";
+    public static final String IP = "104.131.38.51";
     //public static final String IP = "10.1.1.136";
-    public static final String IP = "192.168.0.103";
+    //public static final String IP = "192.168.0.103";
 
     // PUERTO
-    //public static final String PORT = "80";
-    public static final String PORT = "3002";
+    public static final String PORT = "80";
+    //public static final String PORT = "3002";
 
     // URL BASE
     public static final String URL_BASE = "http://" + IP + ":" + PORT;

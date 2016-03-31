@@ -20,7 +20,7 @@ import rx.android.schedulers.AndroidSchedulers;
 /**
  * Created by Presta on 10/03/2016.
  */
-public class TabPublicidadFragment extends Fragment {
+public class DestacadosFragment extends Fragment {
 
     //region "-- ATRIBUTOS --"
 
@@ -31,7 +31,7 @@ public class TabPublicidadFragment extends Fragment {
 
     //region "-- CONSTRUCTOR --"
 
-    public TabPublicidadFragment() {
+    public DestacadosFragment() {
         // Required empty public constructor
     }
 
@@ -48,7 +48,7 @@ public class TabPublicidadFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_tab_publicidades, container, false);
+        View root = inflater.inflate(R.layout.fragment_destacados, container, false);
 
         mRecycler = (RecyclerView) root.findViewById(R.id.list_publicidades);
 

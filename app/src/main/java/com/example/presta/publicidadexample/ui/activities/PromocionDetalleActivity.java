@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,6 +45,8 @@ public class PromocionDetalleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_promocion_detalle);
+
+
         setToolbar();// Añadir action bar
 
         CollapsingToolbarLayout collapser = (CollapsingToolbarLayout) findViewById(R.id.collapser);
@@ -66,6 +70,14 @@ public class PromocionDetalleActivity extends AppCompatActivity {
         setDescripcion(descripcion);
         setImg(imgURL);
 
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            //window.clearFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            // window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.primary_dark));
+        }
+
         adapter = new PublicidadRecyclerAdapter(this);
 
         requestPublicidades();
@@ -88,9 +100,6 @@ public class PromocionDetalleActivity extends AppCompatActivity {
             }
 
         switch (item.getItemId()) {
-            case R.id.action_favorite:
-                //showSnackBar("favorito!");
-                return true;
             case R.id.action_share:
                 compartir();
                 return true;

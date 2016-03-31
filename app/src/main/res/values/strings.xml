@@ -14,4 +14,7 @@
     <string name="publicidad_detalle_img_contentDescription">imagen</string>
     <string name="promocion_title">Promoción</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
