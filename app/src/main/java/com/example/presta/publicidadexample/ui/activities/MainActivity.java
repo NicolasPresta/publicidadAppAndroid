@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity
         phoneDataDao = DaoSessionAccesor.GetDaoSession(this).getPhoneDataDao();
         userDataDao = DaoSessionAccesor.GetDaoSession(this).getUserDataDao();
 
-
         // Carga la configuración base de la app
         cargarConfigApp();
 
@@ -157,13 +156,14 @@ public class MainActivity extends AppCompatActivity
     //region "-- CARGA DESDE SQL --"
 
     private void cargarPhoneData() {
-        // Carga el objeto PhoneData en la base de datos en caso de que el mismo no exista.
 
         List phoneDatalist = phoneDataDao.loadAll();
-        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        CommonVariables.SetUuid(tm.getSubscriberId());
 
         if (phoneDatalist.size() == 0) {
+
+            // Carga el objeto PhoneData en la base de datos en caso de que el mismo no exista.
+            TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+
             phoneData = new PhoneData();
             phoneData.setDeviceId(tm.getDeviceId());
             phoneData.setSubscriberId(tm.getSubscriberId());
@@ -179,26 +179,10 @@ public class MainActivity extends AppCompatActivity
             phoneData.setDatosSincronizados(false);
 
             phoneDataDao.insert(phoneData);
+
         } else {
             phoneData = (PhoneData) phoneDatalist.get(0);
         }
-
-
-        // LOGS:
-        /*
-        Log.i("READ_getDeviceId", tm.getDeviceId()); // Numero unico del celular
-        Log.i("READ_getSubscriberId", tm.getSubscriberId()); // Numero unico de instalación de Android
-
-        Log.i("READ_getSimSerialNumber", tm.getSimSerialNumber()); // Numero unico de la SIM
-        Log.i("READ_getLine1Number", tm.getLine1Number()); // Numero de telefono (Si lo tiene cargado, generalmente no y esto es nulo)
-        Log.i("READ_getNetworkOperator", tm.getNetworkOperatorName()); // Nombre de la operadora de telefonia
-        Log.i("READ_getNetworkCountryI", tm.getNetworkCountryIso()); // Codigo del pais
-
-        Log.i("READ.VERSION.SDK_INT", Integer.toString(Build.VERSION.SDK_INT)); // Version de Android
-        Log.i("READ.MANUFACTURER", Build.MANUFACTURER); // Fabricante del celular
-        Log.i("READ.MODEL", Build.MODEL); // Modelo del celular
-        */
-
     }
 
     private void cargarConfigApp() {
@@ -279,13 +263,13 @@ public class MainActivity extends AppCompatActivity
 
                         switch (menuItem.getItemId()) {
                             case R.id.menu_inicio:
-                                seleccionarTab(0);
+                                viewPager.setCurrentItem(0);
                                 break;
                             case R.id.menu_tarjeta:
-                                seleccionarTab(1);
+                                viewPager.setCurrentItem(1);
                                 break;
                             case R.id.menu_sucursales:
-                                seleccionarTab(2);
+                                viewPager.setCurrentItem(2);
                                 break;
                             case R.id.menu_fila:
                                 // TODO: invocar al activity de fila.
@@ -308,10 +292,6 @@ public class MainActivity extends AppCompatActivity
                 });
     }
 
-    void seleccionarTab(int pageIndex) {
-        viewPager.setCurrentItem(pageIndex);
-    }
-
     private void cargarMainLayout() {
         setContentView(R.layout.activity_main);
 
@@ -326,7 +306,6 @@ public class MainActivity extends AppCompatActivity
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_share);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
     private void cargarPrimerUsoLayout() {
@@ -358,7 +337,6 @@ public class MainActivity extends AppCompatActivity
         tabLayout.getTabAt(1).setText("Tarjeta Descuentos");
         //tabLayout.getTabAt(1).setIcon(R.drawable.ic_corazon);
         tabLayout.getTabAt(2).setText("Sucursales");
-
     }
 
     private ArrayList<Fragment> buildFragments() {
@@ -471,9 +449,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
     //endregion
-
 }
 
 

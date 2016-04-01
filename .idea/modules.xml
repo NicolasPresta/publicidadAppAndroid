@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PublicidadExample.iml" filepath="$PROJECT_DIR$/PublicidadExample.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/entitiesgenerator/entitiesgenerator.iml" filepath="$PROJECT_DIR$/entitiesgenerator/entitiesgenerator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/publicidadAppAndroid.iml" filepath="$PROJECT_DIR$/publicidadAppAndroid.iml" />
     </modules>
   </component>
 </project>
