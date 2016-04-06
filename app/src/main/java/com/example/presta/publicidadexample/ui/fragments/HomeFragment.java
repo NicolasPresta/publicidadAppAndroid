@@ -106,6 +106,7 @@ public class HomeFragment extends Fragment {
         items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
         items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
         items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
+        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
 
         items.add(new HomeItem(ClaseHomeItemEnum.PROMOCION.ordinal(), new Promocion(1, "promocion 2", "desde", "url", "xxyyuu", "http://www.grupoarco.com.mx/wp-content/uploads/promocion.png", "blabla", "desde", "titulo")));
 
@@ -121,26 +122,6 @@ public class HomeFragment extends Fragment {
         items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
         items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
         items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
-
-        items.add(new HomeItem(ClaseHomeItemEnum.PROMOCION.ordinal(), new Promocion(1, "promocion 2", "desde", "url", "xxyyuu", "http://www.grupoarco.com.mx/wp-content/uploads/promocion.png", "blabla", "desde", "titulo")));
-        items.add(new HomeItem(ClaseHomeItemEnum.PROMOCION.ordinal(), new Promocion(1, "promocion 2", "desde", "url", "xxyyuu", "http://www.grupoarco.com.mx/wp-content/uploads/promocion.png", "blabla", "desde", "titulo")));
-        items.add(new HomeItem(ClaseHomeItemEnum.PUBLICIDAD.ordinal(), new Publicidad(1, "publicidad 1", "description 1", "desde", "hasta", "blabla", "http://cdn5.publicidadenlanube.es/wp-content/uploads/2015/02/Maestrosdelapublicidad.jpg", "aa")));
-        items.add(new HomeItem(ClaseHomeItemEnum.PUBLICIDAD.ordinal(), new Publicidad(1, "publicidad 2", "description 2", "desde", "hasta", "blabla",  "http://comunikndo.com/wp-content/uploads/2013/09/publicidad-en-la-nube.jpg", "aa")));
-
-        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
-        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
-        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
-        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
-        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
-        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
-        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
-
-        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
-        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
-        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
-        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
-        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
-        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
         items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
 
         items.add(new HomeItem(ClaseHomeItemEnum.PROMOCION.ordinal(), new Promocion(1, "promocion 2", "desde", "url", "xxyyuu", "http://www.grupoarco.com.mx/wp-content/uploads/promocion.png", "blabla", "desde", "titulo")));
@@ -148,6 +129,30 @@ public class HomeFragment extends Fragment {
         items.add(new HomeItem(ClaseHomeItemEnum.PUBLICIDAD.ordinal(), new Publicidad(1, "publicidad 1", "description 1", "desde", "hasta", "blabla", "http://cdn5.publicidadenlanube.es/wp-content/uploads/2015/02/Maestrosdelapublicidad.jpg", "aa")));
         items.add(new HomeItem(ClaseHomeItemEnum.PUBLICIDAD.ordinal(), new Publicidad(1, "publicidad 2", "description 2", "desde", "hasta", "blabla",  "http://comunikndo.com/wp-content/uploads/2013/09/publicidad-en-la-nube.jpg", "aa")));
 
+        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
+        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
+        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
+        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
+        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
+        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
+        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
+        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
+
+        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
+        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
+        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
+        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
+        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
+        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
+        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
+        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
+
+        items.add(new HomeItem(ClaseHomeItemEnum.PROMOCION.ordinal(), new Promocion(1, "promocion 2", "desde", "url", "xxyyuu", "http://www.grupoarco.com.mx/wp-content/uploads/promocion.png", "blabla", "desde", "titulo")));
+        items.add(new HomeItem(ClaseHomeItemEnum.PROMOCION.ordinal(), new Promocion(1, "promocion 2", "desde", "url", "xxyyuu", "http://www.grupoarco.com.mx/wp-content/uploads/promocion.png", "blabla", "desde", "titulo")));
+        items.add(new HomeItem(ClaseHomeItemEnum.PUBLICIDAD.ordinal(), new Publicidad(1, "publicidad 1", "description 1", "desde", "hasta", "blabla", "http://cdn5.publicidadenlanube.es/wp-content/uploads/2015/02/Maestrosdelapublicidad.jpg", "aa")));
+        items.add(new HomeItem(ClaseHomeItemEnum.PUBLICIDAD.ordinal(), new Publicidad(1, "publicidad 2", "description 2", "desde", "hasta", "blabla",  "http://comunikndo.com/wp-content/uploads/2013/09/publicidad-en-la-nube.jpg", "aa")));
+
+        items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
         items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
         items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
         items.add(new HomeItem(ClaseHomeItemEnum.PRODUCTO.ordinal(), new Producto(1, "http://peruf5.com/zapatos/documentos/productos/zapatilla-de-lona-tigre-urbanas-originales.jpg", "blabla", "zapatilla", "utl", 20.5)));
