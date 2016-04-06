@@ -1,4 +1,4 @@
-package com.example.presta.publicidadexample.common;
+package com.example.presta.publicidadexample.common.helpers;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

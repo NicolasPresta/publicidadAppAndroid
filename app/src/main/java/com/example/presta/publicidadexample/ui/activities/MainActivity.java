@@ -7,10 +7,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,15 +17,13 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
 
 import com.example.presta.publicidadexample.R;
-import com.example.presta.publicidadexample.common.AlarmGPSStart;
-import com.example.presta.publicidadexample.common.CommonVariables;
+import com.example.presta.publicidadexample.common.helpers.AlarmGPSStart;
+import com.example.presta.publicidadexample.common.helpers.CommonVariables;
 import com.example.presta.publicidadexample.rest.post.OnPostCompleted;
 import com.example.presta.publicidadexample.dataAccess.dao.DaoSessionAccesor;
 import com.example.presta.publicidadexample.dataAccess.model.AppConfig;
@@ -37,12 +34,11 @@ import com.example.presta.publicidadexample.dataAccess.model.UserData;
 import com.example.presta.publicidadexample.dataAccess.model.UserDataDao;
 import com.example.presta.publicidadexample.rest.ApiConstants;
 import com.example.presta.publicidadexample.rest.post.PostRequestTask;
-import com.example.presta.publicidadexample.ui.adapter.PageAdapter;
 import com.example.presta.publicidadexample.ui.fragments.DestacadosFragment;
+import com.example.presta.publicidadexample.ui.fragments.HomeFragment;
 import com.example.presta.publicidadexample.ui.fragments.SucursalesFragment;
 
 import java.net.HttpURLConnection;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -58,8 +54,6 @@ public class MainActivity extends AppCompatActivity
 
     // componentes de mainLayout
     Toolbar toolbar;
-    ViewPager viewPager;
-    TabLayout tabLayout;
     DrawerLayout drawerLayout;
     NavigationView navView;
 
@@ -78,6 +72,13 @@ public class MainActivity extends AppCompatActivity
 
     UserDataDao userDataDao;
     UserData userData;
+
+    // fragmentos
+    Fragment fragmentHome = null;
+    Fragment fragmentDestacados2 = null;
+    Fragment fragmentDestacados3 = null;
+    Fragment fragmentDestacados4 = null;
+    Fragment fragmentSucursales = null;
 
     //endregion
 
@@ -108,7 +109,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             // si no cargamos el layout principal
             cargarMainLayout();
-            cargarMenuLateral();
         }
 
         // Carga los datos del celular, y verifica si no se envió al servidor intenta enviarlo.
@@ -257,57 +257,93 @@ public class MainActivity extends AppCompatActivity
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-
-                        boolean fragmentTransaction = false;
-                        Fragment fragment = null;
-
-                        switch (menuItem.getItemId()) {
-                            case R.id.menu_inicio:
-                                viewPager.setCurrentItem(0);
-                                break;
-                            case R.id.menu_tarjeta:
-                                viewPager.setCurrentItem(1);
-                                break;
-                            case R.id.menu_sucursales:
-                                viewPager.setCurrentItem(2);
-                                break;
-                            case R.id.menu_fila:
-                                // TODO: invocar al activity de fila.
-                                break;
-                        }
-/*
-                        if (fragmentTransaction) {
-                            getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.content_frame, fragment)
-                                    .commit();
-
-                            menuItem.setChecked(true);
-                            getSupportActionBar().setTitle(menuItem.getTitle());
-                        }
-*/
-                        drawerLayout.closeDrawers();
-
+                        seleccionItemMenu(menuItem);
                         return true;
+
                     }
                 });
     }
 
+    public void seleccionItemMenu(MenuItem menuItem) {
+
+        // Muestra el fragmento correspondiente en el contenedor principal.
+
+        Fragment fragment = null;
+
+        switch (menuItem.getItemId()) {
+            case R.id.menu_inicio: {
+                if (fragmentHome == null)
+                    fragmentHome = new HomeFragment();
+                fragment = fragmentHome;
+                break;
+            }
+            case R.id.menu_tarjeta: {
+                if (fragmentSucursales == null)
+                    fragmentSucursales = new SucursalesFragment();
+                fragment = fragmentSucursales;
+                break;
+            }
+            case R.id.menu_sucursales: {
+                if (fragmentDestacados2 == null)
+                    fragmentDestacados2 = new DestacadosFragment();
+                fragment = fragmentDestacados2;
+                break;
+            }
+            case R.id.menu_fila: {
+                if (fragmentDestacados3 == null)
+                    fragmentDestacados3 = new DestacadosFragment();
+                fragment = fragmentDestacados3;
+                break;
+            }
+            default: {
+                fragment = fragmentDestacados3;
+                break;
+            }
+        }
+
+
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.flContent, fragment)
+                .addToBackStack(null)
+                .commit();
+
+        // Highlight the selected item has been done by NavigationView
+        menuItem.setChecked(true);
+
+        // Set action bar title
+        setTitle(menuItem.getTitle());
+
+        // Close the navigation drawer
+        drawerLayout.closeDrawers();
+    }
+
     private void cargarMainLayout() {
         setContentView(R.layout.activity_main);
+        cargarToolBar();
+        cargarMenuLateral();
 
+        // Cargamos el frame principal
+        fragmentHome = new HomeFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.flContent, fragmentHome)
+                .commit();
+    }
+
+    private void cargarToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-
-        setupViewPager();
-
-        if (toolbar != null)
+        if (toolbar != null) {
             setSupportActionBar(toolbar);
+        }
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_share);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    // Carga los componentes graficos para cuando es la primera vez que se inicia la app
     private void cargarPrimerUsoLayout() {
         setContentView(R.layout.activity_primer_uso);
 
@@ -325,28 +361,9 @@ public class MainActivity extends AppCompatActivity
         c.set(year - 8, 11, 30);
         dateCumple.setMaxDate(c.getTimeInMillis());
 
+        dateCumple.updateDate(year - 18, 0, 1);
+
         dateCumple.refreshDrawableState();
-    }
-
-    private void setupViewPager() {
-        viewPager.setAdapter(new PageAdapter(getSupportFragmentManager(), buildFragments()));
-        tabLayout.setupWithViewPager(viewPager);
-
-        tabLayout.getTabAt(0).setText("Destacados");
-        //tabLayout.getTabAt(0).setIcon(R.drawable.ic_corazon);
-        tabLayout.getTabAt(1).setText("Tarjeta Descuentos");
-        //tabLayout.getTabAt(1).setIcon(R.drawable.ic_corazon);
-        tabLayout.getTabAt(2).setText("Sucursales");
-    }
-
-    private ArrayList<Fragment> buildFragments() {
-        ArrayList<Fragment> fragments = new ArrayList<>();
-
-        fragments.add(new DestacadosFragment());
-        fragments.add(new SucursalesFragment());
-        fragments.add(new SucursalesFragment());
-
-        return fragments;
     }
 
     //endregion

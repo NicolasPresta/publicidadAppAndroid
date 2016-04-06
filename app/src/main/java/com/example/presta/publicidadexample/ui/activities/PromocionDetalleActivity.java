@@ -3,23 +3,20 @@ package com.example.presta.publicidadexample.ui.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.presta.publicidadexample.R;
-import com.example.presta.publicidadexample.rest.get.jsonModel.Publicidad;
+import com.example.presta.publicidadexample.common.entities.Publicidad;
 import com.example.presta.publicidadexample.rest.get.ApiGetAdapter;
 import com.example.presta.publicidadexample.rest.get.jsonModel.PublicidadResponse;
-import com.example.presta.publicidadexample.ui.adapter.PublicidadRecyclerAdapter;
+import com.example.presta.publicidadexample.ui.recyclers.adapters.PublicidadRecyclerAdapter;
 import com.squareup.picasso.Picasso;
 
 import rx.Subscriber;

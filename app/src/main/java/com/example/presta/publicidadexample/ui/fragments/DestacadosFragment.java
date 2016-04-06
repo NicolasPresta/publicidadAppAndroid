@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.example.presta.publicidadexample.R;
 import com.example.presta.publicidadexample.rest.get.ApiGetAdapter;
 import com.example.presta.publicidadexample.rest.get.jsonModel.PublicidadesResponse;
-import com.example.presta.publicidadexample.ui.adapter.PublicidadRecyclerAdapter;
+import com.example.presta.publicidadexample.ui.recyclers.adapters.PublicidadRecyclerAdapter;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -26,6 +26,7 @@ public class DestacadosFragment extends Fragment {
 
     private RecyclerView mRecycler;
     private PublicidadRecyclerAdapter adapter;
+    private boolean requestInicialRealizado = false;
 
     //endregion
 
@@ -53,28 +54,21 @@ public class DestacadosFragment extends Fragment {
         mRecycler = (RecyclerView) root.findViewById(R.id.list_publicidades);
 
         // Hace el setup del RecyclerView
-        setupList();
+        mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecycler.setAdapter(adapter);
 
         // Consulta las publicidades a la API
-        requestInicialPublicidades();
+        if (!requestInicialRealizado) {
+            requestInicialPublicidades();
+            requestInicialRealizado = true;
+        }
 
         return root;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     //endregion
 
     //region "-- PRIVATE METHODS --"
-
-    private void setupList() {
-        mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecycler.setAdapter(adapter);
-        // mRecycler.addItemDecoration(new ItemDividerDecoration(getActivity()));
-    }
 
     private void requestInicialPublicidades() {
         ApiGetAdapter.getAll()

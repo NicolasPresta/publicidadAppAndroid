@@ -19,8 +19,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <receiver android:name=".receivers.AlarmGPSReceiver"></receiver>
-        <receiver android:enabled="true" android:name=".receivers.BootUpReceiver"
+        <receiver android:name=".receivers.AlarmGetGPSReceiver">
+
+        </receiver>
+        <receiver android:name=".receivers.AlarmSincGPSReceiver">
+
+        </receiver>
+
+        <receiver
+            android:name=".receivers.BootUpReceiver"
+            android:enabled="true"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
 
             <intent-filter>
@@ -44,9 +52,14 @@
 
         </activity>
 
-        <service android:name=".services.GPSService"
-            android:exported="false"/>
+        <activity android:name=".ui.activities.NovedadesActivity">
 
+        </activity>
+
+
+        <service
+            android:name=".services.GPSTracker"
+            android:exported="false" />
 
 
     </application>

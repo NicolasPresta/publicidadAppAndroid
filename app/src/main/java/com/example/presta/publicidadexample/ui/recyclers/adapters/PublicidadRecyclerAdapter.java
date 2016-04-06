@@ -1,4 +1,4 @@
-package com.example.presta.publicidadexample.ui.adapter;
+package com.example.presta.publicidadexample.ui.recyclers.adapters;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.example.presta.publicidadexample.ui.activities.PromocionDetalleActivity;
 import com.example.presta.publicidadexample.R;
-import com.example.presta.publicidadexample.rest.get.jsonModel.Publicidad;
+import com.example.presta.publicidadexample.common.entities.Publicidad;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package com.example.presta.publicidadexample.rest.get;
 
-import com.example.presta.publicidadexample.common.CommonVariables;
+import com.example.presta.publicidadexample.common.helpers.CommonVariables;
 import com.example.presta.publicidadexample.rest.ApiConstants;
 import com.example.presta.publicidadexample.rest.get.jsonModel.PublicidadResponse;
 import com.example.presta.publicidadexample.rest.get.jsonModel.PublicidadesResponse;

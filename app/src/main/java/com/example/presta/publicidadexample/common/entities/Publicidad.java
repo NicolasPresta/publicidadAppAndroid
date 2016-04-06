@@ -1,4 +1,4 @@
-package com.example.presta.publicidadexample.rest.get.jsonModel;
+package com.example.presta.publicidadexample.common.entities;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -7,18 +7,10 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Publicidad {
 
-    /*
-        titulo:"Una super oferta",
-        descripcion:"TV 42 pulgadas a solo $10000",
-        img: "http://www.algo.com/imagen.jpg",
-        vigenciaDesde: "09/03/2016",
-        vigenciaHasta: "30/03/2016",
-        condiciones: "solo si tenes familia en la antartida"
-    */
-
     //region "-- CONSTRUCTORS --"
 
-    public Publicidad(String titulo, String descripcion, String vigenciaDesde, String vigenciaHasta, String condiciones, String img, String urlCompartir) {
+    public Publicidad(Integer id, String titulo, String descripcion, String vigenciaDesde, String vigenciaHasta, String condiciones, String img, String urlCompartir) {
+        this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.vigenciaDesde = vigenciaDesde;

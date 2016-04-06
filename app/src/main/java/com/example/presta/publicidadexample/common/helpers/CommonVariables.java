@@ -1,4 +1,4 @@
-package com.example.presta.publicidadexample.common;
+package com.example.presta.publicidadexample.common.helpers;
 
 /**
  * Created by Presta on 17/03/2016.
@@ -9,7 +9,9 @@ package com.example.presta.publicidadexample.common;
 
 public class CommonVariables {
 
-    public static String uuid;
+    //region -- UUID --
+
+    private static String uuid;
 
     public static void SetUuid(String uuidParam){
         uuid = uuidParam;
@@ -18,5 +20,7 @@ public class CommonVariables {
     public static String GetUuid(){
         return uuid;
     }
+
+    //endregion
 
 }

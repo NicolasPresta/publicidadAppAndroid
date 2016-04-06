@@ -3,7 +3,7 @@ package com.example.presta.publicidadexample.rest.post;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.presta.publicidadexample.common.CommonVariables;
+import com.example.presta.publicidadexample.common.helpers.CommonVariables;
 import com.example.presta.publicidadexample.rest.ApiConstants;
 
 import java.io.IOException;

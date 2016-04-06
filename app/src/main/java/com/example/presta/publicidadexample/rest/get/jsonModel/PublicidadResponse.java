@@ -1,5 +1,6 @@
 package com.example.presta.publicidadexample.rest.get.jsonModel;
 
+import com.example.presta.publicidadexample.common.entities.Publicidad;
 import com.google.gson.annotations.SerializedName;
 
 /**

@@ -1,13 +1,10 @@
 package com.example.presta.publicidadexample.receivers;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
-import com.example.presta.publicidadexample.common.AlarmGPSStart;
+import com.example.presta.publicidadexample.common.helpers.AlarmGPSStart;
 
 /**
  * Created by Presta on 27/03/2016.
