@@ -30,13 +30,11 @@ public class PromocionDetalleActivity extends AppCompatActivity {
     TextView publicidadVigencia;
     TextView publicidadCondiciones;
 
-    String titulo;
-    String descripcion;
     String imgURL;
     Integer id;
     String urlCompartir;
 
-    private PublicidadRecyclerAdapter adapter;
+    PublicidadRecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +51,10 @@ public class PromocionDetalleActivity extends AppCompatActivity {
 
 
         Bundle b = getIntent().getExtras();
-        titulo = (String) b.getCharSequence("titulo");
-        descripcion = (String) b.getCharSequence("descripcion");
         imgURL = (String) b.getCharSequence("imgURL");
         id = b.getInt("id");
 
-
-        setTitulo(titulo);
-        setDescripcion(descripcion);
         setImg(imgURL);
-
 
         adapter = new PublicidadRecyclerAdapter(this);
 
@@ -104,7 +96,6 @@ public class PromocionDetalleActivity extends AppCompatActivity {
         sendIntent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.share_msj) + urlCompartir);
         sendIntent.setType("text/plain");
         startActivity(Intent.createChooser(sendIntent, getResources().getString(R.string.share_title)));
-        //startActivity(sendIntent);
     }
 
 
@@ -137,7 +128,6 @@ public class PromocionDetalleActivity extends AppCompatActivity {
         if (url != null) {
             Picasso.with(this)
                     .load(url)
-                    .placeholder(R.drawable.img_placeholder)
                     .into(publicidadImagen);
         } else {
             Picasso.with(this)
@@ -168,15 +158,12 @@ public class PromocionDetalleActivity extends AppCompatActivity {
 
     }
 
-    private String getUuid() {
-        return ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getSubscriberId();
-    }
-
     private void cargarPublicidad(Publicidad publicidad) {
         setVigencia(publicidad.getVigenciaHasta());
         setCondiciones(publicidad.getCondiciones());
+        setTitulo(publicidad.getTitulo());
+        setDescripcion(publicidad.getDescripcion());
         urlCompartir = publicidad.getUrlCompartir();
-
     }
 
 }

@@ -21,20 +21,16 @@ import com.squareup.picasso.Picasso;
 
 public class PublicidadViewHolder extends RecyclerView.ViewHolder {
 
-    TextView publicidadTitulo;
-    TextView publicidadDescripcion;
+    final Context context;
     ImageView publicidadImagen;
     String imgURL;
     Integer id;
-    final Context context;
 
     public PublicidadViewHolder(final View itemView, final Context context) {
         super(itemView);
 
         this.context = context;
 
-        publicidadTitulo = (TextView) itemView.findViewById(R.id.txt_titulo);
-        publicidadDescripcion = (TextView) itemView.findViewById(R.id.txt_descripcion);
         publicidadImagen = (ImageView) itemView.findViewById(R.id.img_publicidad);
 
         itemView.setOnClickListener(new View.OnClickListener() {
@@ -44,8 +40,6 @@ public class PublicidadViewHolder extends RecyclerView.ViewHolder {
                 Intent intent = new Intent(itemView.getContext(), PromocionDetalleActivity.class);
 
                 Bundle param = new Bundle();
-                param.putCharSequence("titulo", publicidadTitulo.getText());
-                param.putCharSequence("descripcion", publicidadDescripcion.getText());
                 param.putCharSequence("imgURL", imgURL);
                 param.putInt("id", id);
 
@@ -64,16 +58,8 @@ public class PublicidadViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void setTitulo(String titulo) {
-        publicidadTitulo.setText(titulo);
-    }
-
     public void setId(Integer idParam) {
         id = idParam;
-    }
-
-    public void setDescripcion(String descripcion) {
-        publicidadDescripcion.setText(descripcion);
     }
 
     public void setImg(String url) {
@@ -89,5 +75,4 @@ public class PublicidadViewHolder extends RecyclerView.ViewHolder {
                     .into(publicidadImagen);
         }
     }
-
 }

@@ -9,4 +9,5 @@ public enum ClaseHomeItemEnum {
     PUBLICIDAD,
     PROMOCION,
     SUCURSAL,
+    PROMOCIONES,
 }

@@ -13,29 +13,24 @@
             android:title="Hacer la fila!" />
 
         <item
+            android:id="@+id/menu_tarjeta"
+            android:icon="@drawable/ic_share"
+            android:title="Comunidad" />
+
+        <item
             android:id="@+id/menu_destacados"
             android:icon="@drawable/ic_share"
-            android:title="Destacados" />
+            android:title="Ofertas" />
 
         <item
             android:id="@+id/menu_promociones"
             android:icon="@drawable/ic_share"
-            android:title="Promociones" />
-
-        <item
-            android:id="@+id/menu_catalogo"
-            android:icon="@drawable/ic_corazon"
-            android:title="Catalogo" />
+            android:title="Promociones vigentes" />
 
         <item
             android:id="@+id/menu_sucursales"
             android:icon="@drawable/ic_share"
             android:title="Sucursales" />
-
-        <item
-            android:id="@+id/menu_tarjeta"
-            android:icon="@drawable/ic_share"
-            android:title="Tarjeta de descuentos" />
 
     </group>
 </menu>

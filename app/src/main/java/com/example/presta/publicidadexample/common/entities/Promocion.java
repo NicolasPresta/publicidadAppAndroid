@@ -16,6 +16,7 @@ public class Promocion {
     private String imagen;
     private String urlCompartir;
     private String codigo;
+    private Integer altoImagen;
 
     public Promocion(Integer id, String descripcion, String vigenciaHasta, String urlCompartir, String codigo, String imagen, String condiciones, String vigenciaDesde, String titulo) {
         this.descripcion = descripcion;
@@ -27,6 +28,7 @@ public class Promocion {
         this.vigenciaDesde = vigenciaDesde;
         this.titulo = titulo;
         this.id = id;
+        // this.altoImagen = altoImagen;
     }
 
     public Integer getId() {
@@ -99,5 +101,13 @@ public class Promocion {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public Integer getAltoImagen() {
+        return altoImagen;
+    }
+
+    public void setAltoImagen(Integer altoImagen) {
+        this.altoImagen = altoImagen;
     }
 }

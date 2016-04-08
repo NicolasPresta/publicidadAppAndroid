@@ -15,9 +15,11 @@ import com.example.presta.publicidadexample.common.entities.Publicidad;
 import com.example.presta.publicidadexample.common.enums.ClaseHomeItemEnum;
 import com.example.presta.publicidadexample.ui.recyclers.viewHolders.ProductoViewHolder;
 import com.example.presta.publicidadexample.ui.recyclers.viewHolders.PromocionViewHolder;
+import com.example.presta.publicidadexample.ui.recyclers.viewHolders.PromocionesViewHolder;
 import com.example.presta.publicidadexample.ui.recyclers.viewHolders.PublicidadViewHolder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Presta on 10/03/2016.
@@ -35,6 +37,13 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     // Este metodo se ejecuta cada vez que un elemento se tiene que dibujar
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        if (viewType == ClaseHomeItemEnum.PROMOCIONES.ordinal()) {
+            View itemView = LayoutInflater.from(context)
+                    .inflate(R.layout.item_promociones, parent, false);
+
+            return new PromocionesViewHolder(itemView, context);
+        }
 
         if (viewType == ClaseHomeItemEnum.PROMOCION.ordinal()) {
             View itemView = LayoutInflater.from(context)
@@ -71,12 +80,17 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         int viewType = getItemViewType(position);
 
+        if (viewType == ClaseHomeItemEnum.PROMOCIONES.ordinal()) {
+            PromocionesViewHolder viewHolderPromociones = (PromocionesViewHolder) holder;
+            ArrayList<Promocion> promociones = (ArrayList<Promocion>)items.get(position).getEntidad();
+
+            viewHolderPromociones.setPromociones(promociones);
+        }
+
         if (viewType == ClaseHomeItemEnum.PROMOCION.ordinal()) {
             PromocionViewHolder viewHolderPromocion = (PromocionViewHolder) holder;
             Promocion currentPublicidad = (Promocion)items.get(position).getEntidad();
 
-            viewHolderPromocion.setTitulo(currentPublicidad.getTitulo());
-            viewHolderPromocion.setDescripcion(currentPublicidad.getDescripcion());
             viewHolderPromocion.setImg(currentPublicidad.getImagen());
             viewHolderPromocion.setId(currentPublicidad.getId());
         }
@@ -85,8 +99,6 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             PublicidadViewHolder viewHolderPublicidad = (PublicidadViewHolder) holder;
             Publicidad currentPublicidad = (Publicidad)items.get(position).getEntidad();
 
-            viewHolderPublicidad.setTitulo(currentPublicidad.getTitulo());
-            viewHolderPublicidad.setDescripcion(currentPublicidad.getDescripcion());
             viewHolderPublicidad.setImg(currentPublicidad.getImg());
             viewHolderPublicidad.setId(currentPublicidad.getId());
         }

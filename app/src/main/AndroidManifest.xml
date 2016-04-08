@@ -48,8 +48,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activities.PromocionDetalleActivity">
-
+        <activity
+            android:name=".ui.activities.PromocionDetalleActivity"
+            android:label="Promocion"
+            android:theme="@style/AppTheme">
         </activity>
 
         <activity android:name=".ui.activities.NovedadesActivity">

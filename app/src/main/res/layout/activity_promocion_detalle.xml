@@ -21,7 +21,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
@@ -39,8 +38,9 @@
             <ImageView
                 android:id="@+id/img_publicidad"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/publicidad_detalle_img_height"
+                android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
                 android:contentDescription="@string/publicidad_detalle_img_contentDescription"
                 android:transitionName="shareImg" />
 

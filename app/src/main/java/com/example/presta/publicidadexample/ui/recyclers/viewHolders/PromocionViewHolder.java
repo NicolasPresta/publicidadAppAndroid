@@ -21,9 +21,7 @@ import com.squareup.picasso.Picasso;
 public class PromocionViewHolder extends RecyclerView.ViewHolder {
 
     final Context context;
-    TextView publicidadTitulo;
-    TextView publicidadDescripcion;
-    ImageView publicidadImagen;
+    ImageView promocionImagen;
     String imgURL;
     Integer id;
 
@@ -31,9 +29,7 @@ public class PromocionViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
 
         this.context = context;
-        publicidadTitulo = (TextView) itemView.findViewById(R.id.txt_titulo);
-        publicidadDescripcion = (TextView) itemView.findViewById(R.id.txt_descripcion);
-        publicidadImagen = (ImageView) itemView.findViewById(R.id.img_publicidad);
+        promocionImagen = (ImageView) itemView.findViewById(R.id.img_promocion);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,8 +38,6 @@ public class PromocionViewHolder extends RecyclerView.ViewHolder {
                 Intent intent = new Intent(itemView.getContext(), PromocionDetalleActivity.class);
 
                 Bundle param = new Bundle();
-                param.putCharSequence("titulo", publicidadTitulo.getText());
-                param.putCharSequence("descripcion", publicidadDescripcion.getText());
                 param.putCharSequence("imgURL", imgURL);
                 param.putInt("id", id);
 
@@ -51,7 +45,7 @@ public class PromocionViewHolder extends RecyclerView.ViewHolder {
 
                 // Si la SDK >= 21 puedo usar animacion para la trancisión entre las vistas.
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, publicidadImagen, "shareImg");
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, promocionImagen, "shareImg");
                     itemView.getContext().startActivity(intent, options.toBundle());
                 } else {
                     itemView.getContext().startActivity(intent);
@@ -62,16 +56,8 @@ public class PromocionViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void setTitulo(String titulo) {
-        publicidadTitulo.setText(titulo);
-    }
-
     public void setId(Integer idParam) {
         id = idParam;
-    }
-
-    public void setDescripcion(String descripcion) {
-        publicidadDescripcion.setText(descripcion);
     }
 
     public void setImg(String url) {
@@ -80,11 +66,11 @@ public class PromocionViewHolder extends RecyclerView.ViewHolder {
             Picasso.with(context)
                     .load(url)
                     .placeholder(R.drawable.img_placeholder)
-                    .into(publicidadImagen);
+                    .into(promocionImagen);
         } else {
             Picasso.with(context)
                     .load(R.drawable.img_placeholder)
-                    .into(publicidadImagen);
+                    .into(promocionImagen);
         }
     }
 

@@ -5,50 +5,15 @@
     android:foreground="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:elevation="5dp"
-    android:layout_marginBottom="@dimen/margen_entre_publicidades">
+    android:layout_marginBottom="@dimen/margen_entre_publicidades"
+    android:layout_margin="8dp">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+    <ImageView
+        android:id="@+id/img_publicidad"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/primary_light">
-
-        <ImageView
-            android:id="@+id/img_publicidad"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/item_publicidad_img_height"
-            android:scaleType="centerCrop"
-            android:transitionName="shareImg"/>
-
-        <LinearLayout
-            android:id="@+id/linear_1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom"
-            android:gravity="left"
-            android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:layout_marginBottom="3dp">
-
-            <TextView
-                android:id="@+id/txt_titulo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Una super oferta"
-                android:textColor="@color/primary_text"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/txt_descripcion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TV 42 pulgadas a solo $10000"
-                android:textColor="@color/secondary_text"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:transitionName="shareImg" />
 
 </android.support.v7.widget.CardView>
