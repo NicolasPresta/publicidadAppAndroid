@@ -18,5 +18,9 @@
     <dimen name="publicidad_detalle_valides_textSize">20sp</dimen>
     <dimen name="publicidad_detalle_descripcion_marginTop">5dp</dimen>
     <dimen name="publicidad_detalle_titulo_marginTop">5dp</dimen>
+    <dimen name="publicidad_card_margin">8dp</dimen>
+    <dimen name="promocion_card_margin">8dp</dimen>
+
+
 
 </resources>

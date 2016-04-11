@@ -9,7 +9,7 @@ public class Publicidad {
 
     //region "-- CONSTRUCTORS --"
 
-    public Publicidad(Integer id, String titulo, String descripcion, String vigenciaDesde, String vigenciaHasta, String condiciones, String img, String urlCompartir) {
+    public Publicidad(Integer id, String titulo, String descripcion, String vigenciaDesde, String vigenciaHasta, String condiciones, String img, String urlCompartir, Float imgProporcion) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -18,6 +18,7 @@ public class Publicidad {
         this.condiciones = condiciones;
         this.img = img;
         this.urlCompartir = urlCompartir;
+        this.imgProporcion = imgProporcion;
     }
 
     //endregion
@@ -47,6 +48,11 @@ public class Publicidad {
 
     @SerializedName("urlCompartir")
     private String urlCompartir;
+
+    // alto  / ancho
+    @SerializedName("imgProporcion")
+    private Float imgProporcion;
+
 
     //endregion
 
@@ -84,6 +90,10 @@ public class Publicidad {
         this.urlCompartir = URLCompartir;
     }
 
+    public void setImgProporcion(Float imgProporcion) {
+        this.imgProporcion = imgProporcion;
+    }
+
     //endregion
 
     //region "-- GETTERS --"
@@ -118,6 +128,10 @@ public class Publicidad {
 
     public String getUrlCompartir() {
         return urlCompartir;
+    }
+
+    public Float getImgProporcion() {
+        return imgProporcion;
     }
 
     //endregion

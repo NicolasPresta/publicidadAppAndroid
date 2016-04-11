@@ -82,30 +82,32 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         if (viewType == ClaseHomeItemEnum.PROMOCIONES.ordinal()) {
             PromocionesViewHolder viewHolderPromociones = (PromocionesViewHolder) holder;
-            ArrayList<Promocion> promociones = (ArrayList<Promocion>)items.get(position).getEntidad();
+            ArrayList<Promocion> promociones = (ArrayList<Promocion>) items.get(position).getEntidad();
 
             viewHolderPromociones.setPromociones(promociones);
         }
 
         if (viewType == ClaseHomeItemEnum.PROMOCION.ordinal()) {
             PromocionViewHolder viewHolderPromocion = (PromocionViewHolder) holder;
-            Promocion currentPublicidad = (Promocion)items.get(position).getEntidad();
+            Promocion currentPublicidad = (Promocion) items.get(position).getEntidad();
 
-            viewHolderPromocion.setImg(currentPublicidad.getImagen());
+            viewHolderPromocion.setImg(currentPublicidad.getImagen(), currentPublicidad.getImgProporcion());
             viewHolderPromocion.setId(currentPublicidad.getId());
         }
 
         if (viewType == ClaseHomeItemEnum.PUBLICIDAD.ordinal()) {
             PublicidadViewHolder viewHolderPublicidad = (PublicidadViewHolder) holder;
-            Publicidad currentPublicidad = (Publicidad)items.get(position).getEntidad();
+            Publicidad currentPublicidad = (Publicidad) items.get(position).getEntidad();
 
-            viewHolderPublicidad.setImg(currentPublicidad.getImg());
+            viewHolderPublicidad.setImg(currentPublicidad.getImg(), currentPublicidad.getImgProporcion());
             viewHolderPublicidad.setId(currentPublicidad.getId());
+            //  viewHolderPublicidad.setImgAncho();
+            // viewHolderPublicidad.setImgAlto();
         }
 
         if (viewType == ClaseHomeItemEnum.PRODUCTO.ordinal()) {
             ProductoViewHolder viewHolderProducto = (ProductoViewHolder) holder;
-            Producto currentProducto = (Producto)items.get(position).getEntidad();
+            Producto currentProducto = (Producto) items.get(position).getEntidad();
 
             viewHolderProducto.setNombre(currentProducto.getNombre());
             viewHolderProducto.setPrecio(currentProducto.getPrecio());

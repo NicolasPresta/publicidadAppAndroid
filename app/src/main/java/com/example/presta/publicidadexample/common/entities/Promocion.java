@@ -17,8 +17,9 @@ public class Promocion {
     private String urlCompartir;
     private String codigo;
     private Integer altoImagen;
+    private Float imgProporcion;
 
-    public Promocion(Integer id, String descripcion, String vigenciaHasta, String urlCompartir, String codigo, String imagen, String condiciones, String vigenciaDesde, String titulo) {
+    public Promocion(Integer id, String descripcion, String vigenciaHasta, String urlCompartir, String codigo, String imagen, String condiciones, String vigenciaDesde, String titulo, Float imgProporcion) {
         this.descripcion = descripcion;
         this.vigenciaHasta = vigenciaHasta;
         this.urlCompartir = urlCompartir;
@@ -28,6 +29,7 @@ public class Promocion {
         this.vigenciaDesde = vigenciaDesde;
         this.titulo = titulo;
         this.id = id;
+        this.imgProporcion = imgProporcion;
         // this.altoImagen = altoImagen;
     }
 
@@ -109,5 +111,13 @@ public class Promocion {
 
     public void setAltoImagen(Integer altoImagen) {
         this.altoImagen = altoImagen;
+    }
+
+    public Float getImgProporcion() {
+        return imgProporcion;
+    }
+
+    public void setImgProporcion(Float imgProporcion) {
+        this.imgProporcion = imgProporcion;
     }
 }

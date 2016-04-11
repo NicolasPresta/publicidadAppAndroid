@@ -2,4 +2,5 @@
 <com.daimajia.slider.library.SliderLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/slider"
     android:layout_width="match_parent"
-    android:layout_height="250dp" />
+    android:layout_height="250dp"
+    android:background="@color/primary_light"/>
