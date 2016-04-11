@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,8 @@ import com.example.presta.publicidadexample.R;
 import com.example.presta.publicidadexample.common.helpers.UnitsHelper;
 import com.example.presta.publicidadexample.ui.activities.PromocionDetalleActivity;
 import com.squareup.picasso.Picasso;
+
+import java.util.Random;
 
 /**
  * Created by Presta on 05/04/2016.
@@ -64,7 +67,13 @@ public class PromocionViewHolder extends RecyclerView.ViewHolder {
 
     public void setImg(String url, Float proporcion) {
 
+        // Esto es para fijar el alto de la imagen al alto que va a tener cuando se descargue la img.
         Integer alto = Math.round(proporcion * (UnitsHelper.getScreenWidthDp(context) - (2 * (int) context.getResources().getDimension(R.dimen.promocion_card_margin))));
+
+        // Generación aleatoria del color de fondo del placeholder
+        Random rnd = new Random();
+        int color = Color.argb(100, rnd.nextInt(150), rnd.nextInt(150), rnd.nextInt(256));
+        promocionImagen.setBackgroundColor(color);
 
         promocionImagen.setMinimumHeight(alto);
         imgURL = url;
