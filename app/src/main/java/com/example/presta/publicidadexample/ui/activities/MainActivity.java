@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 
 import com.example.presta.publicidadexample.R;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity
 
     //region "-- ATRIBUTOS PRIVADOS --"
 
+
     // componentes de mainLayout
     Toolbar toolbar;
     DrawerLayout drawerLayout;
@@ -75,10 +77,7 @@ public class MainActivity extends AppCompatActivity
 
     // fragmentos
     Fragment fragmentHome = null;
-    Fragment fragmentDestacados2 = null;
     Fragment fragmentDestacados3 = null;
-    Fragment fragmentDestacados4 = null;
-    Fragment fragmentSucursales = null;
 
     //endregion
 
@@ -87,6 +86,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.i("PASOPORACA", "onCreate");
 
         // Cargar uuid en una variable compartida por toda la app.
         cargarUuid();
@@ -116,6 +117,8 @@ public class MainActivity extends AppCompatActivity
 
         // Carga los datos de las cuentas del usuario, y verifica si no se envió al servidor intenta enviarlo.
         sincronizarUserData();
+
+
     }
 
     @Override
@@ -149,6 +152,34 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Log.i("PASOPORACA", "onStop");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Log.i("PASOPORACA", "onPause");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Log.i("PASOPORACA", "onStart");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        Log.i("PASOPORACA", "onRestart");
     }
 
     //endregion
@@ -271,13 +302,13 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
 
         switch (menuItem.getItemId()) {
-            case R.id.menu_inicio: {
+            case R.id.menu_home: {
                 if (fragmentHome == null)
                     fragmentHome = new HomeFragment();
                 fragment = fragmentHome;
                 break;
             }
-            case R.id.menu_tarjeta: {
+           /* case R.id.menu_tarjeta: {
                 if (fragmentSucursales == null)
                     fragmentSucursales = new SucursalesFragment();
                 fragment = fragmentSucursales;
@@ -294,7 +325,7 @@ public class MainActivity extends AppCompatActivity
                     fragmentDestacados3 = new DestacadosFragment();
                 fragment = fragmentDestacados3;
                 break;
-            }
+            }*/
             default: {
                 fragment = fragmentDestacados3;
                 break;
@@ -339,7 +370,7 @@ public class MainActivity extends AppCompatActivity
             setSupportActionBar(toolbar);
         }
 
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_share);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

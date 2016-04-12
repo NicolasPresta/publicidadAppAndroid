@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
@@ -41,6 +42,7 @@ public class PromocionesViewHolder extends RecyclerView.ViewHolder
 
         this.context = context;
         mSlider = (SliderLayout) itemView.findViewById(R.id.slider);
+        mSlider.stopAutoCycle();
     }
 
     public void setId(Integer idParam) {
@@ -53,7 +55,7 @@ public class PromocionesViewHolder extends RecyclerView.ViewHolder
 
         for (Promocion promo: promociones) {
 
-            DefaultSliderView sliderView = new DefaultSliderView(context);
+            CustomSliderView sliderView = new CustomSliderView(context);
             // initialize a SliderLayout
             sliderView
                     .description(promo.getTitulo())
@@ -68,10 +70,12 @@ public class PromocionesViewHolder extends RecyclerView.ViewHolder
 
             mSlider.addSlider(sliderView);
 
-            mSlider.setPresetTransformer(SliderLayout.Transformer.FlipHorizontal);
-            mSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+            //mSlider.setPresetTransformer(SliderLayout.Transformer.FlipHorizontal);
+            mSlider.setPresetTransformer(SliderLayout.Transformer.Default);
+            //mSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+            mSlider.setCustomIndicator((PagerIndicator) itemView.findViewById(R.id.custom_indicator));
             mSlider.setCustomAnimation(new DescriptionAnimation());
-            mSlider.setDuration(4000);
+            //mSlider.setDuration(4000);
         }
 
     }
@@ -88,13 +92,13 @@ public class PromocionesViewHolder extends RecyclerView.ViewHolder
 
         intent.putExtras(param);
 
-         //Si la SDK >= 21 puedo usar animacion para la trancisión entre las vistas.
-       // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-       //     ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, ((CustomSliderView)slider).getImageView(), "shareImg");
-       //     itemView.getContext().startActivity(intent, options.toBundle());
-       // } else {
+        //Si la SDK >= 21 puedo usar animacion para la trancisión entre las vistas.
+       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, ((CustomSliderView)slider).getImageView(), "shareImg");
+            itemView.getContext().startActivity(intent, options.toBundle());
+        } else {
             itemView.getContext().startActivity(intent);
-       // }
+        }
     }
 
 

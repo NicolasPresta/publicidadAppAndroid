@@ -2,6 +2,7 @@ package com.example.presta.publicidadexample.dataAccess.dao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.presta.publicidadexample.dataAccess.model.DaoMaster;
 import com.example.presta.publicidadexample.dataAccess.model.DaoSession;
@@ -23,6 +24,7 @@ public class DaoSessionAccesor {
             SQLiteDatabase db = helper.getWritableDatabase();
             DaoMaster daoMaster = new DaoMaster(db);
             daoSession = daoMaster.newSession();
+            Log.i("PASOPORACA", "GetDaoSession");
         }
 
         return daoSession;

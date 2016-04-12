@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,11 +61,13 @@ public class HomeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new HomeRecyclerAdapter(getActivity());
+        Log.i("PASOPORACA", "HOMEonCreate");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.i("PASOPORACA", "HOMEonCreateView");
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         mRecycler = (RecyclerView) root.findViewById(R.id.recycler_home);
@@ -117,6 +120,7 @@ public class HomeFragment extends Fragment {
         // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
         // mDemoSlider.stopAutoCycle();
         super.onStop();
+        Log.i("PASOPORACA", "HOMEonCreateView");
     }
 
     //endregion
@@ -132,12 +136,12 @@ public class HomeFragment extends Fragment {
 
         ArrayList<Promocion> promociones = new ArrayList<>();
 
-        promociones.add(new Promocion(1, "promocion 1", "desde", "url", "xxyyuu", "http://www.krea-publicidad.com/krea-publicidad/img/promocion-tarjetas-de-presentacion-facebook-krea-publicidad-en-ecuador-web-en-ecuador.png", "blabla", "desde", "titulo", (float)1));
-        promociones.add(new Promocion(1, "promocion 2", "desde", "url", "xxyyuu", "http://freddo.com.ar/wp-content/uploads/2015/02/santander.png", "blabla", "desde", "titulo", (float)1));
-        promociones.add(new Promocion(1, "promocion 3", "desde", "url", "xxyyuu", "http://es.club-onlyou.com/var/klepierre_es/storage/images/meridiano/ofertas/promocion-tarjeta-movieyelmo/7936297-1-esl-ES/Promocion-tarjeta-Movieyelmo_781_331.jpg", "blabla", "desde", "titulo", (float)1));
-        promociones.add(new Promocion(1, "promocion 3", "desde", "url", "xxyyuu", "http://cazaofertas.com.ar/wp-content/uploads/2015/06/Cinemacenter-tarjeta-nevada-2x1.jpg", "blabla", "desde", "titulo", (float)1));
-        promociones.add(new Promocion(1, "promocion 3", "desde", "url", "xxyyuu", "http://cazaofertas.com.ar/wp-content/uploads/2015/09/Cinema-adrogue-lunes-martes-precio-miercoles-sube.jpg", "blabla", "desde", "titulo", (float)1));
-        promociones.add(new Promocion(1, "promocion 3", "desde", "url", "xxyyuu", "https://www.superchangomas.com.ar/wp-content/uploads/2015/11/Banner-Jueves_CH-01.jpg", "blabla", "desde", "titulo", (float)1));
+        promociones.add(new Promocion(1, "promocion 1", "desde", "url", "xxyyuu", "https://2.bp.blogspot.com/-PvB_s3-uZWU/VuMBs-4p0pI/AAAAAAAAAy0/2Ce5OAvQucU6GCCX0fwunhMATFBDf4BQg/s1600/Coto%2B18%2Bcuotas.png", "blabla", "desde", "titulo", (float)1));
+        promociones.add(new Promocion(1, "promocion 2", "desde", "url", "xxyyuu", "https://4.bp.blogspot.com/-r4TlKFpOQTc/VuMCbNfkvHI/AAAAAAAAAy4/i42Mb2AXIm0bF2cj5PTtDw6a9ENAOxAOw/s1600/Coto%2B12cuotas.png", "blabla", "desde", "titulo", (float)1));
+        promociones.add(new Promocion(1, "promocion 3", "desde", "url", "xxyyuu", "http://www.eldiario24.com/d24ar/fotos/uploads/editorial/2013/02/08/imagenes/41597_Coto-Promocion-.jpg", "blabla", "desde", "titulo", (float)1));
+        promociones.add(new Promocion(1, "promocion 3", "desde", "url", "xxyyuu", "http://fandeldescuento.com.ar/wp-content/uploads/2015/12/Cxampphtdocsfddwp-contentuploads20151242064.jpg?491409", "blabla", "desde", "titulo", (float)1));
+        promociones.add(new Promocion(1, "promocion 3", "desde", "url", "xxyyuu", "http://www.promosargentina.com/wp-content/uploads/2013/09/LUNES4.jpg", "blabla", "desde", "titulo", (float)1));
+        promociones.add(new Promocion(1, "promocion 3", "desde", "url", "xxyyuu", "http://fandeldescuento.com.ar/wp-content/uploads/2016/03/Cxampphtdocsfddwp-contentuploads20160345426-215x300.jpg?e30b2f", "blabla", "desde", "titulo", (float)1));
 
         items.add(new HomeItem(ClaseHomeItemEnum.PROMOCIONES.ordinal(), promociones));
 

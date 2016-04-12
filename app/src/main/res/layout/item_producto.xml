@@ -49,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:text="Zapatilla"
-        android:background="@drawable/background"
+        android:background="@drawable/gradiente_background"
         android:textColor="@color/primary_text_ligth"
         android:textSize="30sp"
         android:textStyle="bold"

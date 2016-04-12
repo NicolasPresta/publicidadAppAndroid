@@ -1,5 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.daimajia.slider.library.SliderLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/slider"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="250dp" />
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/margen_entre_publicidades"
+    android:layout_marginBottom="@dimen/margen_entre_publicidades">
+
+    <TextView
+        android:id="@+id/txt_sombra1"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/accent" />
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+        <com.daimajia.slider.library.SliderLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/slider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.daimajia.slider.library.Indicators.PagerIndicator
+            android:id="@+id/custom_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:gravity="center"
+            android:paddingBottom="9dp"
+            custom:selected_color="@color/accent"
+            custom:selected_height="16dp"
+            custom:selected_padding_left="2dp"
+            custom:selected_padding_right="2dp"
+            custom:selected_width="16dp"
+            custom:shape="oval"
+            custom:unselected_color="#ba757575"
+            custom:unselected_height="16dp"
+            custom:unselected_padding_left="2dp"
+            custom:unselected_padding_right="2dp"
+            custom:unselected_width="16dp" />
+
+        <TextView
+            android:id="@+id/txt_sombra3"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/gradiente_background_up" />
+
+        <TextView
+            android:id="@+id/txt_sombra2"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_gravity="top"
+            android:background="@drawable/gradiente_background" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/txt_sombra4"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/accent" />
+
+</LinearLayout>

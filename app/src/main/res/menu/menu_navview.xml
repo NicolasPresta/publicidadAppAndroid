@@ -3,34 +3,44 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/menu_inicio"
-            android:icon="@drawable/ic_share"
-            android:title="Home" />
+            android:id="@+id/menu_home"
+            android:icon="@drawable/ic_home_black_24px"
+            android:title="Inicio" />
 
         <item
             android:id="@+id/menu_fila"
-            android:icon="@drawable/ic_share"
+            android:icon="@drawable/ic_shopping_cart_black_24px"
             android:title="Hacer la fila!" />
 
         <item
             android:id="@+id/menu_tarjeta"
-            android:icon="@drawable/ic_share"
+            android:icon="@drawable/ic_credit_card_black_24dp"
             android:title="Comunidad" />
 
         <item
-            android:id="@+id/menu_destacados"
-            android:icon="@drawable/ic_share"
-            android:title="Ofertas" />
+            android:id="@+id/menu_ofertas"
+            android:icon="@drawable/ic_loyalty_black_24dp"
+            android:title="Ofertas de la semana" />
 
         <item
             android:id="@+id/menu_promociones"
-            android:icon="@drawable/ic_share"
+            android:icon="@drawable/ic_local_atm_black_24dp"
             android:title="Promociones vigentes" />
 
         <item
             android:id="@+id/menu_sucursales"
-            android:icon="@drawable/ic_share"
+            android:icon="@drawable/ic_place_black_24dp"
             android:title="Sucursales" />
+
+        <item
+            android:id="@+id/menu_configurar"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="Configurar" />
+
+        <item
+            android:id="@+id/menu_ayuda"
+            android:icon="@drawable/ic_help_outline_black_24dp"
+            android:title="¿Necesitas ayuda?" />
 
     </group>
 </menu>

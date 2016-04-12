@@ -1,19 +1,16 @@
 <resources>
-    <string name="app_name">Comercio</string>
+    <string name="app_name">COTO</string>
     <string name="pedir_cumple">Nos gustaría saber tu fecha de cumpleaños&#8230; (quien sabe, quizá te preparemos un regalo)</string>
 
     <string name="action_share">Compartir</string>
     <string name="action_favorite">Añadir a favoritos</string>
 
     <string name="share_title">Compartir con&#8230;</string>
-    <string name="share_msj">Chequea este link: \n</string>
-    <string name="share_subject">Mirá lo que econtré en Comercio</string>
+    <string name="share_msj">Mirá este link: \n</string>
+    <string name="share_subject">Mirá lo que encontré en COTO</string>
     <string name="sexo_hombre">Hombre</string>
     <string name="sexo_mujer">Mujer</string>
     <string name="publicidad_detalle_img_contentDescription">imagen</string>
     <string name="promocion_title">Promoción</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
