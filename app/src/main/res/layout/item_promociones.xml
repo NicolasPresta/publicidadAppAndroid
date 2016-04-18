@@ -7,12 +7,13 @@
     android:layout_marginTop="@dimen/margen_entre_publicidades"
     android:layout_marginBottom="@dimen/margen_entre_publicidades">
 
+    <!--
     <TextView
         android:id="@+id/txt_sombra1"
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:background="@color/accent" />
-
+       -->
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:custom="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -42,6 +43,7 @@
             custom:unselected_padding_right="2dp"
             custom:unselected_width="16dp" />
 
+        <!--
         <TextView
             android:id="@+id/txt_sombra3"
             android:layout_width="match_parent"
@@ -55,13 +57,14 @@
             android:layout_height="10dp"
             android:layout_gravity="top"
             android:background="@drawable/gradiente_background" />
-
+ -->
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/txt_sombra4"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/accent" />
-
+    <!--
+   <TextView
+       android:id="@+id/txt_sombra4"
+       android:layout_width="match_parent"
+       android:layout_height="5dp"
+       android:background="@color/accent" />
+-->
 </LinearLayout>

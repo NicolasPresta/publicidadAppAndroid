@@ -20,6 +20,7 @@ import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.example.presta.publicidadexample.R;
+import com.example.presta.publicidadexample.common.entities.Categoria;
 import com.example.presta.publicidadexample.common.entities.HomeItem;
 import com.example.presta.publicidadexample.common.entities.Producto;
 import com.example.presta.publicidadexample.common.entities.Promocion;
@@ -61,19 +62,20 @@ public class HomeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new HomeRecyclerAdapter(getActivity());
-        Log.i("PASOPORACA", "HOMEonCreate");
+      //  Log.i("PASOPORACA", "HOMEonCreate");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Log.i("PASOPORACA", "HOMEonCreateView");
+      //  Log.i("PASOPORACA", "HOMEonCreateView");
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         mRecycler = (RecyclerView) root.findViewById(R.id.recycler_home);
 
         final GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
 
+        // Esto lo usamos para saber si usar 1 columna o 2 dependiendo del tipo de item. Por ahora solo hay items de 1 columna
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
@@ -98,7 +100,7 @@ public class HomeFragment extends Fragment {
 
                         if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                             //loading = false;
-                            requestInicial();
+                          //  requestInicial();
                         }
                     }
                 }
@@ -145,6 +147,14 @@ public class HomeFragment extends Fragment {
 
         items.add(new HomeItem(ClaseHomeItemEnum.PROMOCIONES.ordinal(), promociones));
 
+        ArrayList<Categoria> categorias = new ArrayList<>();
+        categorias.add(new Categoria("Hogar", "http://www.grupobolanos.com/images/fotos/cosas-del-hogar-las-palmas-03.jpg"));
+        categorias.add(new Categoria("Electro", "http://www.mcintoshlabs.com/us/CollectionImage/reference_home_theater_avgalleria_xl.jpg"));
+        categorias.add(new Categoria("Pescaderia", "http://www.elarco.es/upload/sample_08.jpg"));
+        categorias.add(new Categoria("Mascotas", "https://ugc.kn3.net/i/origin/http://gpi-blog.s3.amazonaws.com/wp-content/uploads/2014/10/mascotas.jpg"));
+        categorias.add(new Categoria("Vinos", "http://www.hipoglucidos.com/alvaro/bootstrap/bodega/bodega-de-los-abetos.jpg"));
+        categorias.add(new Categoria("Congelados", "http://www.labrandero.es/wp-content/uploads/2013/09/congelados-2.png"));
+        items.add(new HomeItem(ClaseHomeItemEnum.CATEGORIAS.ordinal(), categorias));
 
         items.add(new HomeItem(ClaseHomeItemEnum.PUBLICIDAD.ordinal(), new Publicidad(1, "publicidad 1", "description 1", "desde", "hasta", "blabla", "http://s23.postimg.org/6hlf0ib2z/image.jpg", "aa", (float)375 / (float)502)));
         items.add(new HomeItem(ClaseHomeItemEnum.PUBLICIDAD.ordinal(), new Publicidad(1, "publicidad 2", "description 2", "desde", "hasta", "blabla", "http://s23.postimg.org/yvqukdymz/image.jpg", "aa", (float)342 / (float)320 )));

@@ -3,16 +3,19 @@ package com.example.presta.publicidadexample.ui.recyclers.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.presta.publicidadexample.R;
+import com.example.presta.publicidadexample.common.entities.Categoria;
 import com.example.presta.publicidadexample.common.entities.HomeItem;
 import com.example.presta.publicidadexample.common.entities.Producto;
 import com.example.presta.publicidadexample.common.entities.Promocion;
 import com.example.presta.publicidadexample.common.entities.Publicidad;
 import com.example.presta.publicidadexample.common.enums.ClaseHomeItemEnum;
+import com.example.presta.publicidadexample.ui.recyclers.viewHolders.CategoriasViewHolder;
 import com.example.presta.publicidadexample.ui.recyclers.viewHolders.ProductoViewHolder;
 import com.example.presta.publicidadexample.ui.recyclers.viewHolders.PromocionViewHolder;
 import com.example.presta.publicidadexample.ui.recyclers.viewHolders.PromocionesViewHolder;
@@ -66,6 +69,13 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return new ProductoViewHolder(itemView, context);
         }
 
+        if (viewType == ClaseHomeItemEnum.CATEGORIAS.ordinal()) {
+            View itemView = LayoutInflater.from(context)
+                    .inflate(R.layout.item_categorias, parent, false);
+
+            return new CategoriasViewHolder(itemView, context);
+        }
+
         return null;
     }
 
@@ -114,7 +124,27 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             viewHolderProducto.setImg(currentProducto.getImagen());
         }
 
+        if (viewType == ClaseHomeItemEnum.CATEGORIAS.ordinal()) {
+            CategoriasViewHolder viewHolderCategorias = (CategoriasViewHolder) holder;
+            ArrayList<Categoria> categorias = (ArrayList<Categoria>) items.get(position).getEntidad();
+
+            viewHolderCategorias.setCategorias(categorias);
+        }
+
     }
+
+    @Override
+    public void onViewRecycled (RecyclerView.ViewHolder holder){
+        int viewType = getItemViewType(holder.getAdapterPosition());
+
+        Log.i("ADAPTER", "pasa pora aca");
+       /* if (viewType == ClaseHomeItemEnum.PROMOCIONES.ordinal()) {
+            PromocionesViewHolder viewHolderPromociones = (PromocionesViewHolder) holder;
+            viewHolderPromociones.stopAutoCycle();
+        }*/
+
+    }
+
 
     // La cantidad de items de la lista
     @Override

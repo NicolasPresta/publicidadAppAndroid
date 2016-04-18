@@ -1,5 +1,7 @@
 package com.example.presta.publicidadexample.common.helpers;
 
+import com.daimajia.slider.library.SliderLayout;
+
 /**
  * Created by Presta on 17/03/2016.
  */

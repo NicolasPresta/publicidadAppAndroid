@@ -43,6 +43,7 @@ public class PromocionesViewHolder extends RecyclerView.ViewHolder
         this.context = context;
         mSlider = (SliderLayout) itemView.findViewById(R.id.slider);
         mSlider.stopAutoCycle();
+        //setIsRecyclable(false);
     }
 
     public void setId(Integer idParam) {
@@ -71,11 +72,11 @@ public class PromocionesViewHolder extends RecyclerView.ViewHolder
             mSlider.addSlider(sliderView);
 
             //mSlider.setPresetTransformer(SliderLayout.Transformer.FlipHorizontal);
-            mSlider.setPresetTransformer(SliderLayout.Transformer.Default);
+            mSlider.setPresetTransformer(SliderLayout.Transformer.ZoomOutSlide);
             //mSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
             mSlider.setCustomIndicator((PagerIndicator) itemView.findViewById(R.id.custom_indicator));
             mSlider.setCustomAnimation(new DescriptionAnimation());
-            //mSlider.setDuration(4000);
+            mSlider.setDuration(3000);
         }
 
     }

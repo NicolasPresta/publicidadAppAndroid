@@ -97,16 +97,4 @@ public class PublicidadViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void setImgAncho(Integer ancho) {
-
-    }
-
-    public void setImgAlto(Integer alto) {
-        /*Integer altoDp = Math.round(UnitsHelper.convertPixelsToDp(alto, context));
-
-        card.setLayoutParams(new CardView.LayoutParams(
-                CardView.LayoutParams.MATCH_PARENT, altoDp));
-
-        card.setMinimumHeight(altoDp);*/
-    }
 }
