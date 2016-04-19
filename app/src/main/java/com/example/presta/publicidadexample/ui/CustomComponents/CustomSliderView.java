@@ -1,4 +1,4 @@
-package com.example.presta.publicidadexample.ui;
+package com.example.presta.publicidadexample.ui.CustomComponents;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item xmlns:android="http://schemas.android.com/apk/res/android">
+        <shape>
+            <solid android:color="@color/categoria_background" />
+            <corners
+                android:bottomLeftRadius="105dp"
+                android:bottomRightRadius="105dp"
+                android:topLeftRadius="105dp"
+                android:topRightRadius="105dp" />
+        </shape>
+    </item>
+</layer-list>

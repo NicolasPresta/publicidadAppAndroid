@@ -1,12 +1,21 @@
 package com.example.presta.publicidadexample.ui.recyclers.viewHolders;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.presta.publicidadexample.R;
+import com.example.presta.publicidadexample.ui.activities.CategoriaActivity;
 import com.squareup.picasso.Picasso;
 
 
@@ -20,6 +29,7 @@ public class CategoriaViewHolder extends RecyclerView.ViewHolder {
     TextView nombre;
     String imgURL;
     Integer id;
+    CardView card;
 
     public CategoriaViewHolder(final View itemView, final Context context) {
         super(itemView);
@@ -28,23 +38,29 @@ public class CategoriaViewHolder extends RecyclerView.ViewHolder {
 
         categoriaImagen = (ImageView) itemView.findViewById(R.id.img);
         nombre = (TextView) itemView.findViewById(R.id.txt_nombre);
+        card = (CardView) itemView.findViewById(R.id.categoria_card);
 
-        /* TOOD: ir al activity de categoria filtrando por esa categoria
-        itemView.setOnClickListener(new View.OnClickListener() {
+        card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(itemView.getContext(), PromocionDetalleActivity.class);
+                Intent intent = new Intent(itemView.getContext(), CategoriaActivity.class);
 
                 Bundle param = new Bundle();
-                param.putCharSequence("imgURL", imgURL);
-                param.putInt("id", id);
+                param.putCharSequence("categoria", nombre.getText());
+                param.putCharSequence("urlImg", imgURL);
+
+                Log.i("Categoria", "paso por aca");
 
                 intent.putExtras(param);
 
                 // Si la SDK >= 21 puedo usar animacion para la trancisión entre las vistas.
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, publicidadImagen, "shareImg");
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, nombre, "shareCatTxt");
+                   /* ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context,
+                            Pair.create((View)categoriaImagen, "shareCatImg"),
+                            Pair.create((View)nombre, "shareCatTxt"));*/
+
                     itemView.getContext().startActivity(intent, options.toBundle());
                 } else {
                     itemView.getContext().startActivity(intent);
@@ -52,7 +68,7 @@ public class CategoriaViewHolder extends RecyclerView.ViewHolder {
 
             }
         });
-        */
+
     }
 
     public void setNombre(String nom) {

@@ -13,7 +13,7 @@
             android:title="Hacer la fila!" />
 
         <item
-            android:id="@+id/menu_tarjeta"
+            android:id="@+id/menu_socio"
             android:icon="@drawable/ic_credit_card_black_24dp"
             android:title="Comunidad" />
 

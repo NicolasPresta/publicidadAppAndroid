@@ -63,8 +63,11 @@ public class CategoriasRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     public void addAll(@NonNull ArrayList<Categoria> itemsNuevos) {
-        items.addAll(itemsNuevos);
-        notifyDataSetChanged();
+        // Solo los agrego la primera vez.
+        if (items.size() == 0) {
+            items.addAll(itemsNuevos);
+            notifyDataSetChanged();
+        }
     }
 
 }

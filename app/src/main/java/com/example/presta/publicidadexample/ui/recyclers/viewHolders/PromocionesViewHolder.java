@@ -8,23 +8,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.example.presta.publicidadexample.R;
 import com.example.presta.publicidadexample.common.entities.Promocion;
-import com.example.presta.publicidadexample.ui.CustomSliderView;
+import com.example.presta.publicidadexample.ui.CustomComponents.CustomSliderView;
 import com.example.presta.publicidadexample.ui.activities.PromocionDetalleActivity;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Presta on 08/04/2016.

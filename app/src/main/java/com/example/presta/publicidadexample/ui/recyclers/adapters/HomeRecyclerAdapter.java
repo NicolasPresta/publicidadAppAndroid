@@ -133,19 +133,6 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
-    @Override
-    public void onViewRecycled (RecyclerView.ViewHolder holder){
-        int viewType = getItemViewType(holder.getAdapterPosition());
-
-        Log.i("ADAPTER", "pasa pora aca");
-       /* if (viewType == ClaseHomeItemEnum.PROMOCIONES.ordinal()) {
-            PromocionesViewHolder viewHolderPromociones = (PromocionesViewHolder) holder;
-            viewHolderPromociones.stopAutoCycle();
-        }*/
-
-    }
-
-
     // La cantidad de items de la lista
     @Override
     public int getItemCount() {

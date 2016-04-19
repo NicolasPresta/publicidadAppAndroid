@@ -37,6 +37,9 @@ import com.example.presta.publicidadexample.rest.ApiConstants;
 import com.example.presta.publicidadexample.rest.post.PostRequestTask;
 import com.example.presta.publicidadexample.ui.fragments.DestacadosFragment;
 import com.example.presta.publicidadexample.ui.fragments.HomeFragment;
+import com.example.presta.publicidadexample.ui.fragments.OfertasFragment;
+import com.example.presta.publicidadexample.ui.fragments.PromocionesFragment;
+import com.example.presta.publicidadexample.ui.fragments.SocioFragment;
 import com.example.presta.publicidadexample.ui.fragments.SucursalesFragment;
 
 import java.net.HttpURLConnection;
@@ -77,8 +80,9 @@ public class MainActivity extends AppCompatActivity
 
     // fragmentos
     Fragment fragmentHome = null;
-    Fragment fragmentDestacados3 = null;
-
+    Fragment fragmentOfertas = null;
+    Fragment fragmentPromociones = null;
+    Fragment fragmentSocio = null;
     //endregion
 
     //region "-- OVERRIDES --"
@@ -308,26 +312,26 @@ public class MainActivity extends AppCompatActivity
                 fragment = fragmentHome;
                 break;
             }
-           /* case R.id.menu_tarjeta: {
-                if (fragmentSucursales == null)
-                    fragmentSucursales = new SucursalesFragment();
-                fragment = fragmentSucursales;
+            case R.id.menu_ofertas: {
+                if (fragmentOfertas == null)
+                    fragmentOfertas = new OfertasFragment();
+                fragment = fragmentOfertas;
                 break;
             }
-            case R.id.menu_sucursales: {
-                if (fragmentDestacados2 == null)
-                    fragmentDestacados2 = new DestacadosFragment();
-                fragment = fragmentDestacados2;
+            case R.id.menu_promociones: {
+                if (fragmentPromociones == null)
+                    fragmentPromociones = new PromocionesFragment();
+                fragment = fragmentPromociones;
                 break;
             }
-            case R.id.menu_fila: {
-                if (fragmentDestacados3 == null)
-                    fragmentDestacados3 = new DestacadosFragment();
-                fragment = fragmentDestacados3;
+            case R.id.menu_socio: {
+                if (fragmentSocio == null)
+                    fragmentSocio = new SocioFragment();
+                fragment = fragmentSocio;
                 break;
-            }*/
+            }
             default: {
-                fragment = fragmentDestacados3;
+                fragment = fragmentHome;
                 break;
             }
         }
