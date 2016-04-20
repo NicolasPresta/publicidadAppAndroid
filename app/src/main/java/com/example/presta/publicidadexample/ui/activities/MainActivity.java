@@ -35,7 +35,7 @@ import com.example.presta.publicidadexample.dataAccess.model.UserData;
 import com.example.presta.publicidadexample.dataAccess.model.UserDataDao;
 import com.example.presta.publicidadexample.rest.ApiConstants;
 import com.example.presta.publicidadexample.rest.post.PostRequestTask;
-import com.example.presta.publicidadexample.ui.fragments.DestacadosFragment;
+import com.example.presta.publicidadexample.ui.fragments.CategoriasFragment;
 import com.example.presta.publicidadexample.ui.fragments.HomeFragment;
 import com.example.presta.publicidadexample.ui.fragments.OfertasFragment;
 import com.example.presta.publicidadexample.ui.fragments.PromocionesFragment;
@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity
     Fragment fragmentOfertas = null;
     Fragment fragmentPromociones = null;
     Fragment fragmentSocio = null;
+    Fragment fragmentCategorias = null;
     //endregion
 
     //region "-- OVERRIDES --"
@@ -297,6 +298,8 @@ public class MainActivity extends AppCompatActivity
 
                     }
                 });
+
+        navView.getMenu().getItem(0).setChecked(true);
     }
 
     public void seleccionItemMenu(MenuItem menuItem) {
@@ -328,6 +331,12 @@ public class MainActivity extends AppCompatActivity
                 if (fragmentSocio == null)
                     fragmentSocio = new SocioFragment();
                 fragment = fragmentSocio;
+                break;
+            }
+            case R.id.menu_categorias: {
+                if (fragmentCategorias == null)
+                    fragmentCategorias = new CategoriasFragment();
+                fragment = fragmentCategorias;
                 break;
             }
             default: {
@@ -366,6 +375,7 @@ public class MainActivity extends AppCompatActivity
                 .beginTransaction()
                 .replace(R.id.flContent, fragmentHome)
                 .commit();
+
     }
 
     private void cargarToolBar() {

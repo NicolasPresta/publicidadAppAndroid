@@ -28,6 +28,11 @@
             android:title="Promociones vigentes" />
 
         <item
+            android:id="@+id/menu_categorias"
+            android:icon="@drawable/ic_import_contacts_black_24dp"
+            android:title="Catalogo" />
+
+        <item
             android:id="@+id/menu_sucursales"
             android:icon="@drawable/ic_place_black_24dp"
             android:title="Sucursales" />

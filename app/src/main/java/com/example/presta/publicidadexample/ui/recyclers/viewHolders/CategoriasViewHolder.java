@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.example.presta.publicidadexample.R;
 import com.example.presta.publicidadexample.common.entities.Categoria;
+import com.example.presta.publicidadexample.common.enums.CategoriaItemTypeEnum;
 import com.example.presta.publicidadexample.ui.recyclers.adapters.CategoriasRecyclerAdapter;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class CategoriasViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
 
         this.context = context;
-        adapter = new CategoriasRecyclerAdapter(context);
+        adapter = new CategoriasRecyclerAdapter(context, CategoriaItemTypeEnum.HORIZONTAL);
 
         mRecycler = (RecyclerView) itemView.findViewById(R.id.recycler_categorias);
 

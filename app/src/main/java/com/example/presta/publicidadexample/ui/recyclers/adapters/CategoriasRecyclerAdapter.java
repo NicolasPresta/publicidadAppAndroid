@@ -13,6 +13,7 @@ import com.example.presta.publicidadexample.common.entities.HomeItem;
 import com.example.presta.publicidadexample.common.entities.Producto;
 import com.example.presta.publicidadexample.common.entities.Promocion;
 import com.example.presta.publicidadexample.common.entities.Publicidad;
+import com.example.presta.publicidadexample.common.enums.CategoriaItemTypeEnum;
 import com.example.presta.publicidadexample.common.enums.ClaseHomeItemEnum;
 import com.example.presta.publicidadexample.ui.recyclers.viewHolders.CategoriaViewHolder;
 import com.example.presta.publicidadexample.ui.recyclers.viewHolders.ProductoViewHolder;
@@ -29,31 +30,48 @@ public class CategoriasRecyclerAdapter extends RecyclerView.Adapter<RecyclerView
 
     ArrayList<Categoria> items;
     Context context;
+    CategoriaItemTypeEnum clase;
 
-    public CategoriasRecyclerAdapter(Context context) {
+    public CategoriasRecyclerAdapter(Context context, CategoriaItemTypeEnum clase) {
         this.context = context;
         this.items = new ArrayList<>();
+        this.clase = clase;
     }
 
     // Este metodo se ejecuta cada vez que un elemento se tiene que dibujar
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context)
-                .inflate(R.layout.item_categoria, parent, false);
 
-        return new CategoriaViewHolder(itemView, context);
+        if (viewType == CategoriaItemTypeEnum.HORIZONTAL.ordinal()) {
+            View itemView = LayoutInflater.from(context)
+                    .inflate(R.layout.item_categoria, parent, false);
+
+            return new CategoriaViewHolder(itemView, context);
+        }
+
+        if (viewType == CategoriaItemTypeEnum.VERTICAL.ordinal()) {
+            View itemView = LayoutInflater.from(context)
+                    .inflate(R.layout.item_categoria_vertical, parent, false);
+
+            return new CategoriaViewHolder(itemView, context);
+        }
+
+        return null;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return clase.ordinal();
     }
 
     // Este metodo se ejecuta cada vez que un elemento tiene que conectarse a la fuente de datos
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
         CategoriaViewHolder viewHolderCategoria = (CategoriaViewHolder) holder;
-        Categoria currentCategoria = (Categoria) items.get(position);
+        Categoria currentCategoria = items.get(position);
 
         viewHolderCategoria.setNombre(currentCategoria.getNombre());
         viewHolderCategoria.setImg(currentCategoria.getImagen());
-
     }
 
     // La cantidad de items de la lista
