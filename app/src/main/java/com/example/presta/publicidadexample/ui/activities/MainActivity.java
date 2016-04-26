@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -41,6 +42,8 @@ import com.example.presta.publicidadexample.ui.fragments.OfertasFragment;
 import com.example.presta.publicidadexample.ui.fragments.PromocionesFragment;
 import com.example.presta.publicidadexample.ui.fragments.SocioFragment;
 import com.example.presta.publicidadexample.ui.fragments.SucursalesFragment;
+import com.squareup.picasso.LruCache;
+import com.squareup.picasso.Picasso;
 
 import java.net.HttpURLConnection;
 import java.util.Calendar;
@@ -79,11 +82,11 @@ public class MainActivity extends AppCompatActivity
     UserData userData;
 
     // fragmentos
-    Fragment fragmentHome = null;
+    /*Fragment fragmentHome = null;
     Fragment fragmentOfertas = null;
     Fragment fragmentPromociones = null;
     Fragment fragmentSocio = null;
-    Fragment fragmentCategorias = null;
+    Fragment fragmentCategorias = null;*/
     //endregion
 
     //region "-- OVERRIDES --"
@@ -96,6 +99,7 @@ public class MainActivity extends AppCompatActivity
 
         // Cargar uuid en una variable compartida por toda la app.
         cargarUuid();
+        //setupPicasso();
 
         // Inizializa el acceso a la base de datos SQLLitle
         appConfigDao = DaoSessionAccesor.GetDaoSession(this).getAppConfigDao();
@@ -123,6 +127,20 @@ public class MainActivity extends AppCompatActivity
         // Carga los datos de las cuentas del usuario, y verifica si no se envió al servidor intenta enviarlo.
         sincronizarUserData();
 
+
+    }
+
+    private void setupPicasso() {
+
+        // create Picasso.Builder object
+        Picasso.Builder picassoBuilder = new Picasso.Builder(this);
+
+        picassoBuilder.memoryCache(new LruCache(24000));
+
+        // Picasso.Builder creates the Picasso object to do the actual requests
+        Picasso picasso = picassoBuilder.build();
+
+        Picasso.setSingletonInstance(picasso);
 
     }
 
@@ -310,37 +328,27 @@ public class MainActivity extends AppCompatActivity
 
         switch (menuItem.getItemId()) {
             case R.id.menu_home: {
-                if (fragmentHome == null)
-                    fragmentHome = new HomeFragment();
-                fragment = fragmentHome;
+                fragment = new HomeFragment();
                 break;
             }
             case R.id.menu_ofertas: {
-                if (fragmentOfertas == null)
-                    fragmentOfertas = new OfertasFragment();
-                fragment = fragmentOfertas;
+                fragment = new OfertasFragment();
                 break;
             }
             case R.id.menu_promociones: {
-                if (fragmentPromociones == null)
-                    fragmentPromociones = new PromocionesFragment();
-                fragment = fragmentPromociones;
+                fragment = new PromocionesFragment();
                 break;
             }
             case R.id.menu_socio: {
-                if (fragmentSocio == null)
-                    fragmentSocio = new SocioFragment();
-                fragment = fragmentSocio;
+                fragment = new SocioFragment();
                 break;
             }
             case R.id.menu_categorias: {
-                if (fragmentCategorias == null)
-                    fragmentCategorias = new CategoriasFragment();
-                fragment = fragmentCategorias;
+                fragment = new CategoriasFragment();
                 break;
             }
             default: {
-                fragment = fragmentHome;
+                fragment = new HomeFragment();
                 break;
             }
         }
@@ -349,9 +357,11 @@ public class MainActivity extends AppCompatActivity
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
 
+        // addToBackStack causa una importante "fuga" de memoria, ya que se conservan referencias y la cosa explota.
         fragmentManager.beginTransaction()
                 .replace(R.id.flContent, fragment)
-                .addToBackStack(null)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+               // .addToBackStack(null)
                 .commit();
 
         // Highlight the selected item has been done by NavigationView
@@ -370,7 +380,7 @@ public class MainActivity extends AppCompatActivity
         cargarMenuLateral();
 
         // Cargamos el frame principal
-        fragmentHome = new HomeFragment();
+        Fragment fragmentHome = new HomeFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.flContent, fragmentHome)

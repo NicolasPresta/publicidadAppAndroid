@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -15,8 +16,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.presta.publicidadexample.R;
+import com.example.presta.publicidadexample.common.helpers.UnitsHelper;
 import com.example.presta.publicidadexample.ui.activities.CategoriaActivity;
 import com.squareup.picasso.Picasso;
+
+import java.util.Random;
 
 
 /**
@@ -77,10 +81,19 @@ public class CategoriaViewHolder extends RecyclerView.ViewHolder {
 
     public void setImg(String url) {
         imgURL = url;
+
+
+        // Esto es para fijar el alto de la imagen al alto que va a tener cuando se descargue la img.
+        Integer ancho = Math.round(UnitsHelper.convertDpToPixel(context.getResources().getDimension(R.dimen.diametro_categoria_home), context));
+        Integer alto = ancho;
+
+        categoriaImagen.setMinimumHeight(alto);
+        imgURL = url;
         if (url != null) {
             Picasso.with(context)
                     .load(url)
-                    //.placeholder(R.drawable.img_placeholder)
+                    .fit()
+                    .centerCrop()
                     .into(categoriaImagen);
         } else {
             Picasso.with(context)

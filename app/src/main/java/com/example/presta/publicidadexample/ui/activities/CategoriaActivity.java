@@ -191,6 +191,8 @@ public class CategoriaActivity extends AppCompatActivity {
         if (url != null) {
             Picasso.with(this)
                     .load(url)
+                    .fit()
+                    .centerCrop()
                     .into(categoriaImagen);
         } else {
             Picasso.with(this)

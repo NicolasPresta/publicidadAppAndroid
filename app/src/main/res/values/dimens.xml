@@ -20,7 +20,8 @@
     <dimen name="publicidad_detalle_titulo_marginTop">5dp</dimen>
     <dimen name="publicidad_card_margin">8dp</dimen>
     <dimen name="promocion_card_margin">8dp</dimen>
-
+    <dimen name="radio_categoria_home">105dp</dimen>
+    <dimen name="diametro_categoria_home">210dp</dimen>
 
 
 </resources>

@@ -29,6 +29,7 @@ public class PromocionViewHolder extends RecyclerView.ViewHolder {
     ImageView promocionImagen;
     String imgURL;
     Integer id;
+    Float proporcionImg;
 
     public PromocionViewHolder(final View itemView, final Context context) {
         super(itemView);
@@ -45,6 +46,7 @@ public class PromocionViewHolder extends RecyclerView.ViewHolder {
                 Bundle param = new Bundle();
                 param.putCharSequence("imgURL", imgURL);
                 param.putInt("id", id);
+                param.putFloat("imgProp", proporcionImg);
 
                 intent.putExtras(param);
 
@@ -67,8 +69,11 @@ public class PromocionViewHolder extends RecyclerView.ViewHolder {
 
     public void setImg(String url, Float proporcion) {
 
+        proporcionImg = proporcion;
+
         // Esto es para fijar el alto de la imagen al alto que va a tener cuando se descargue la img.
-        Integer alto = Math.round(proporcion * (UnitsHelper.getScreenWidthDp(context) - (2 * (int) context.getResources().getDimension(R.dimen.promocion_card_margin))));
+        Integer ancho = Math.round((UnitsHelper.getScreenWidthDp(context) - (2 * (int) context.getResources().getDimension(R.dimen.promocion_card_margin))));
+        Integer alto = Math.round(proporcion * ancho);
 
         // Generación aleatoria del color de fondo del placeholder
         Random rnd = new Random();
@@ -80,13 +85,16 @@ public class PromocionViewHolder extends RecyclerView.ViewHolder {
         if (url != null) {
             Picasso.with(context)
                     .load(url)
-                            //.placeholder(R.drawable.img_placeholder)
+                    .fit()
+                    .centerInside()
                     .into(promocionImagen);
         } else {
             Picasso.with(context)
                     .load(R.drawable.img_placeholder)
                     .into(promocionImagen);
         }
+
+
     }
 
 }

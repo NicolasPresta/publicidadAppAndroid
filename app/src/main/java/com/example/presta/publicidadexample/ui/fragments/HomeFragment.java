@@ -100,7 +100,7 @@ public class HomeFragment extends Fragment {
 
                         if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                             //loading = false;
-                          //  requestInicial();
+                          requestInicial();
                         }
                     }
                 }
@@ -178,7 +178,6 @@ public class HomeFragment extends Fragment {
         items.add(new HomeItem(ClaseHomeItemEnum.PUBLICIDAD.ordinal(), new Publicidad(1, "publicidad 2", "description 2", "desde", "hasta", "blabla", "http://s23.postimg.org/3mhil4luj/Sin_t_tulo_8.jpg", "aa", (float)334 / (float)408 )));
         items.add(new HomeItem(ClaseHomeItemEnum.PUBLICIDAD.ordinal(), new Publicidad(1, "publicidad 2", "description 2", "desde", "hasta", "blabla", "http://s23.postimg.org/z3no8dod7/Sin_t_tulo_9.jpg", "aa", (float)308 / (float)366 )));
         items.add(new HomeItem(ClaseHomeItemEnum.PUBLICIDAD.ordinal(), new Publicidad(1, "publicidad 2", "description 2", "desde", "hasta", "blabla", "http://s23.postimg.org/jyrkav063/image.jpg", "aa", (float)217 / (float)244 )));
-
 
 
         items.add(new HomeItem(ClaseHomeItemEnum.PROMOCION.ordinal(), new Promocion(1, "promocion 1", "desde", "url", "xxyyuu", "https://s-media-cache-ak0.pinimg.com/736x/53/83/b3/5383b3a88af02bfc066bb6ef46c70fd8.jpg", "blabla", "desde", "titulo", (float)552/ (float)736 )));

@@ -2,6 +2,8 @@ package com.example.presta.publicidadexample.common.entities;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by Presta on 05/04/2016.
  */
@@ -16,8 +18,14 @@ public class Promocion {
     private String imagen;
     private String urlCompartir;
     private String codigo;
-    private Integer altoImagen;
     private Float imgProporcion;
+    private String banco;
+    private String tarjeta;
+    private String diaSemana;
+    private List<String> etiquetas;
+    private Boolean tarjetaSocio;
+    private List<Integer> promcoionesRelacionadas;
+    private List<Integer> ofertasRelacionadas;
 
     public Promocion(Integer id, String descripcion, String vigenciaHasta, String urlCompartir, String codigo, String imagen, String condiciones, String vigenciaDesde, String titulo, Float imgProporcion) {
         this.descripcion = descripcion;
@@ -30,7 +38,6 @@ public class Promocion {
         this.titulo = titulo;
         this.id = id;
         this.imgProporcion = imgProporcion;
-        // this.altoImagen = altoImagen;
     }
 
     public Integer getId() {
@@ -103,14 +110,6 @@ public class Promocion {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
-    }
-
-    public Integer getAltoImagen() {
-        return altoImagen;
-    }
-
-    public void setAltoImagen(Integer altoImagen) {
-        this.altoImagen = altoImagen;
     }
 
     public Float getImgProporcion() {

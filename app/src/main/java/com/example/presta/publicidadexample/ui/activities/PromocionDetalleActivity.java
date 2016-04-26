@@ -1,12 +1,11 @@
 package com.example.presta.publicidadexample.ui.activities;
 
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -14,10 +13,12 @@ import android.widget.TextView;
 
 import com.example.presta.publicidadexample.R;
 import com.example.presta.publicidadexample.common.entities.Publicidad;
+import com.example.presta.publicidadexample.common.helpers.UnitsHelper;
 import com.example.presta.publicidadexample.rest.get.ApiGetAdapter;
 import com.example.presta.publicidadexample.rest.get.jsonModel.PublicidadResponse;
-import com.example.presta.publicidadexample.ui.recyclers.adapters.PublicidadRecyclerAdapter;
 import com.squareup.picasso.Picasso;
+
+import java.util.Random;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -33,8 +34,7 @@ public class PromocionDetalleActivity extends AppCompatActivity {
     String imgURL;
     Integer id;
     String urlCompartir;
-
-    PublicidadRecyclerAdapter adapter;
+    Float imgProp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +53,9 @@ public class PromocionDetalleActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         imgURL = (String) b.getCharSequence("imgURL");
         id = b.getInt("id");
+        imgProp = b.getFloat("imgProp");
 
-        setImg(imgURL);
-
-        adapter = new PublicidadRecyclerAdapter(this);
+        setImg(imgURL, imgProp);
 
         requestPublicidades();
     }
@@ -123,11 +122,24 @@ public class PromocionDetalleActivity extends AppCompatActivity {
         publicidadDescripcion.setText(descripcion);
     }
 
-    public void setImg(String url) {
+    public void setImg(String url, Float proporcion) {
+        // Esto es para fijar el alto de la imagen al alto que va a tener cuando se descargue la img.
+        Integer ancho = Math.round((UnitsHelper.getScreenWidthDp(this)));
+        Integer alto = Math.round(proporcion * ancho);
+
+        // Generación aleatoria del color de fondo del placeholder
+        Random rnd = new Random();
+        int color = Color.argb(100, rnd.nextInt(150), rnd.nextInt(150), rnd.nextInt(256));
+        publicidadImagen.setBackgroundColor(color);
+
+        publicidadImagen.setMinimumHeight(alto);
+
         imgURL = url;
         if (url != null) {
             Picasso.with(this)
                     .load(url)
+                    .resize(ancho, alto)
+                    .onlyScaleDown()
                     .into(publicidadImagen);
         } else {
             Picasso.with(this)

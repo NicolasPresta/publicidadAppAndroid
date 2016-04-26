@@ -71,7 +71,8 @@ public class ProductoViewHolder extends RecyclerView.ViewHolder {
         if (url != null) {
             Picasso.with(context)
                     .load(url)
-                    .placeholder(R.drawable.img_placeholder)
+                    .fit()
+                    .centerCrop()
                     .into(mImagen);
         } else {
             Picasso.with(context)
